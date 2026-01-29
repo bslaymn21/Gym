@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الإعدادات - نظام إدارة الجيم</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- القائمة الجانبية -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <h1>GYM <span>MANAGER</span></h1>
+                </div>
+                <button class="sidebar-close" id="sidebarClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="sidebar-profile">
+                <div class="profile-img">
+                    <img src="https://ui-avatars.com/api/?name=Admin&background=0f4c75&color=fff" alt="صورة المستخدم">
+                </div>
+                <div class="profile-info">
+                    <h3 id="userName">المسؤول الرئيسي</h3>
+                    <p id="userRole">مسؤول</p>
+                    <span class="status online" id="userStatus">متصل</span>
+                </div>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <ul>
+                    <li>
+                        <a href="dashboard.html">
+                            <i class="fas fa-home"></i>
+                            <span>لوحة التحكم</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="members.html">
+                            <i class="fas fa-users"></i>
+                            <span>إدارة الأعضاء</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="renew.html">
+                            <i class="fas fa-redo"></i>
+                            <span>تجديد الاشتراكات</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="calendar.html">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>التقويم والاشتراكات</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="subscriptions.html">
+                            <i class="fas fa-credit-card"></i>
+                            <span>الاشتراكات</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="settings.html">
+                            <i class="fas fa-cog"></i>
+                            <span>الإعدادات</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button class="btn-logout" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>تسجيل الخروج</span>
+                </button>
+            </div>
+        </aside>
+        
+        <!-- طبقة التعتيم للقائمة الجانبية -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        
+        <!-- المحتوى الرئيسي -->
+        <main class="main-content">
+            <!-- شريط الرأس العلوي -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="sidebar-toggle" id="sidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="page-title">
+                        <h2>الإعدادات</h2>
+                    </div>
+                </div>
+                
+                <div class="header-right">
+                    <button class="notifications-btn" id="notificationsBtn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-count" id="notificationCount">0</span>
+                    </button>
+                    
+                    <div class="user-menu">
+                        <div class="user-info">
+                            <span id="headerUserName">المسؤول الرئيسي</span>
+                            <small>مسؤول</small>
+                        </div>
+                        <div class="user-avatar">
+                            <img src="https://ui-avatars.com/api/?name=Admin&background=0f4c75&color=fff" alt="صورة المستخدم">
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- محتوى صفحة الإعدادات -->
+            <div class="dashboard-content">
+                <!-- تبويبات الإعدادات -->
+                <div class="settings-tabs">
+                    <div class="tabs-header">
+                        <button class="tab-btn active" data-tab="profile">الملف الشخصي</button>
+                <!-- <button class="tab-btn" data-tab="gym">إعدادات النادي</button> -->
+                        <button class="tab-btn" data-tab="notifications">الإشعارات</button>
+                        <button class="tab-btn" data-tab="security">الأمان</button>
+                        <button class="tab-btn" data-tab="backup">النسخ الاحتياطي</button>
+                    </div>
+                    
+                    <div class="tabs-content">
+                        <!-- تبويب الملف الشخصي -->
+                        <div class="tab-pane active" id="profile-tab">
+                            <div class="profile-settings">
+                                <h3>الملف الشخصي</h3>
+                                
+                                <div class="profile-header">
+                                    <div class="profile-avatar">
+                                        <img src="https://ui-avatars.com/api/?name=Admin&background=0f4c75&color=fff" 
+                                             alt="صورة المستخدم" id="profileImage">
+                                        <button class="change-avatar-btn" id="changeAvatarBtn">
+                                            <i class="fas fa-camera"></i>
+                                        </button>
+                                    </div>
+                                    <div class="profile-info">
+                                        <h4 id="profileName">المسؤول الرئيسي</h4>
+                                        <p id="profileEmail">admin@gym.com</p>
+                                        <span class="status-badge active">مسؤول</span>
+                                    </div>
+                                </div>
+                                
+                                <form id="profileForm">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="profileFirstName">الاسم الأول *</label>
+                                            <input type="text" id="profileFirstName" value="المسؤول" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="profileLastName">الاسم الأخير *</label>
+                                            <input type="text" id="profileLastName" value="الرئيسي" required>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-actions">
+                                        <button type="submit" class="btn-primary">حفظ التغييرات</button>
+                                        <button type="reset" class="btn-secondary">إلغاء</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <!-- تبويب إعدادات النادي -->
+                        
+                        
+                        <!-- تبويب الإشعارات -->
+                        <div class="tab-pane" id="notifications-tab">
+                            <div class="notifications-settings">
+                                <h3>إعدادات الإشعارات</h3>
+                                
+                                <div class="notification-categories">
+                                    <h4>أنواع الإشعارات</h4>
+                                    
+                                    <div class="category-item">
+                                        <div class="category-info">
+                                            <h5>اشتراكات منتهية</h5>
+                                            <p>إشعارات بخصوص الاشتراكات المنتهية</p>
+                                        </div>
+                                        <label class="switch">
+                                            <input type="checkbox" id="notifyExpired" checked>
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="category-item">
+                                        <div class="category-info">
+                                            <h5>اشتراكات على وشك الانتهاء</h5>
+                                            <p>إشعارات قبل انتهاء الاشتراكات</p>
+                                        </div>
+                                        <label class="switch">
+                                            <input type="checkbox" id="notifyExpiring" checked>
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="category-item">
+                                        <div class="category-info">
+                                            <h5>اشتراكات جديدة</h5>
+                                            <p>إشعارات عند إضافة اشتراكات جديدة</p>
+                                        </div>
+                                        <label class="switch">
+                                            <input type="checkbox" id="notifyNew" checked>
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="category-item">
+                                        <div class="category-info">
+                                            <h5>تجديد اشتراكات</h5>
+                                            <p>إشعارات عند تجديد الاشتراكات</p>
+                                        </div>
+                                        <label class="switch">
+                                            <input type="checkbox" id="notifyRenewals" checked>
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="notification-methods">
+                                    <h4>طرق الإرسال</h4>
+                                    
+                                    <div class="method-item">
+                                        <div class="method-info">
+                                            <h5>الإشعارات داخل النظام</h5>
+                                            <p>عرض الإشعارات في لوحة الإشعارات</p>
+                                        </div>
+                                        <label class="switch">
+                                            <input type="checkbox" id="methodInApp" checked>
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="method-item">
+                                        <div class="method-info">
+                                            <h5>البريد الإلكتروني</h5>
+                                            <p>إرسال إشعارات عبر البريد الإلكتروني</p>
+                                        </div>
+                                        <label class="switch">
+                                            <input type="checkbox" id="methodEmail">
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="method-item">
+                                        <div class="method-info">
+                                            <h5>رسائل SMS</h5>
+                                            <p>إرسال إشعارات عبر رسائل SMS</p>
+                                        </div>
+                                        <label class="switch">
+                                            <input type="checkbox" id="methodSMS">
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-actions">
+                                    <button type="button" class="btn-primary" id="saveNotificationsBtn">
+                                        حفظ إعدادات الإشعارات
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- تبويب الأمان -->
+                        <div class="tab-pane" id="security-tab">
+                            <div class="security-settings">
+                                <h3>إعدادات الأمان</h3>
+                                
+                                <div class="security-options">
+                                    <div class="option-item">
+                                        <div class="option-info">
+                                            <h5>تغيير كلمة المرور</h5>
+                                            <p>تحديث كلمة المرور الحالية</p>
+                                        </div>
+                                        <button class="btn-secondary" id="changePasswordBtn">
+                                            تغيير كلمة المرور
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="option-item">
+                                        <div class="option-info">
+                                            <h5>جلسات تسجيل الدخول</h5>
+                                            <p>عرض وإدارة جلسات تسجيل الدخول النشطة</p>
+                                        </div>
+                                        <button class="btn-secondary" id="viewSessionsBtn">
+                                            عرض الجلسات
+                                        </button>
+                                    </div>
+                                 
+                                    
+                                    <div class="option-item">
+                                        <div class="option-info">
+                                            <h5>تسجيل النشاطات</h5>
+                                            <p>تسجيل جميع الأنشطة المهمة في النظام</p>
+                                        </div>
+                                        <label class="switch">
+                                            <input type="checkbox" id="activityLogging" checked>
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="security-advanced">
+                                    <h4>خيارات متقدمة</h4>
+                                    
+                                    <div class="advanced-item">
+                                        <div class="advanced-info">
+                                            <h5>حذف جميع البيانات</h5>
+                                            <p>هذا الإجراء سيقوم بحذف جميع البيانات ولا يمكن التراجع عنه</p>
+                                        </div>
+                                        <button class="btn-danger" id="deleteAllDataBtn">
+                                            <i class="fas fa-trash"></i> حذف جميع البيانات
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- تبويب النسخ الاحتياطي -->
+                        <div class="tab-pane" id="backup-tab">
+                            <div class="backup-settings">
+                                <h3>النسخ الاحتياطي</h3>
+                                
+                                <div class="backup-options">
+                                    <div class="option-card" id="backupNowCard">
+                                        <div class="option-icon">
+                                            <i class="fas fa-save"></i>
+                                        </div>
+                                        <div class="option-info">
+                                            <h5>نسخ احتياطي الآن</h5>
+                                            <p>إنشاء نسخة احتياطية فورية لجميع البيانات</p>
+                                        </div>
+                                        <button class="btn-primary" id="backupNowBtn">
+                                            إنشاء نسخة احتياطية
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="option-card" id="restoreBackupCard">
+                                        <div class="option-icon">
+                                            <i class="fas fa-undo"></i>
+                                        </div>
+                                        <div class="option-info">
+                                            <h5>استعادة نسخة احتياطية</h5>
+                                            <p>استعادة البيانات من نسخة احتياطية سابقة</p>
+                                        </div>
+                                        <button class="btn-secondary" id="restoreBackupBtn">
+                                            استعادة نسخة
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="option-card" id="autoBackupCard">
+                                        <div class="option-icon">
+                                            <i class="fas fa-robot"></i>
+                                        </div>
+                                        <div class="option-info">
+                                            <h5>النسخ التلقائي</h5>
+                                            <p>ضبط النسخ التلقائي للبيانات</p>
+                                        </div>
+                                        <button class="btn-secondary" id="autoBackupBtn">
+                                            ضبط الإعدادات
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="backup-history">
+                                    <h4>سجل النسخ الاحتياطية</h4>
+                                    
+                                    <div class="history-list" id="backupHistoryList">
+                                        <!-- سيتم ملؤه بواسطة JavaScript -->
+                                    </div>
+                                </div>
+                                
+                                <div class="backup-stats">
+                                    <h4>إحصائيات النسخ الاحتياطي</h4>
+                                    
+                                    <div class="stats-grid">
+                                        <div class="stat-item">
+                                            <i class="fas fa-database"></i>
+                                            <div>
+                                                <h5 id="backupCount">0</h5>
+                                                <p>عدد النسخ الاحتياطية</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="stat-item">
+                                            <i class="fas fa-hdd"></i>
+                                            <div>
+                                                <h5 id="backupSize">0 MB</h5>
+                                                <p>حجم التخزين</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="stat-item">
+                                            <i class="fas fa-calendar-alt"></i>
+                                            <div>
+                                                <h5 id="lastBackupDate">-</h5>
+                                                <p>آخر نسخة احتياطية</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- نموذج تغيير كلمة المرور -->
+    <div id="changePasswordModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>تغيير كلمة المرور</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="changePasswordForm">
+                    <div class="form-group">
+                        <label for="currentPassword">كلمة المرور الحالية *</label>
+                        <input type="password" id="currentPassword" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="newPassword">كلمة المرور الجديدة *</label>
+                        <input type="password" id="newPassword" required>
+                        <small class="hint">يجب أن تكون كلمة المرور 8 أحرف على الأقل</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirmPassword">تأكيد كلمة المرور *</label>
+                        <input type="password" id="confirmPassword" required>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">تغيير كلمة المرور</button>
+                        <button type="button" class="btn-secondary close-modal">إلغاء</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- نموذج النسخ التلقائي -->
+    <div id="autoBackupModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>إعدادات النسخ التلقائي</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="autoBackupForm">
+                    <div class="form-group">
+                        <label for="backupFrequency">تكرار النسخ الاحتياطي</label>
+                        <select id="backupFrequency">
+                            <option value="daily">يومياً</option>
+                            <option value="weekly" selected>أسبوعياً</option>
+                            <option value="monthly">شهرياً</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="backupTime">وقت النسخ الاحتياطي</label>
+                        <input type="time" id="backupTime" value="02:00">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="backupRetention">فترة الاحتفاظ (أيام)</label>
+                        <input type="number" id="backupRetention" min="1" value="30">
+                        <small class="hint">عدد الأيام التي تحتفظ فيها بنسخة احتياطية قبل حذفها</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>ما يتم نسخه احتياطياً</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-item">
+                                <input type="checkbox" id="backupMembers" checked>
+                                <span class="checkmark"></span>
+                                <span>بيانات الأعضاء</span>
+                            </label>
+                            
+                            <label class="checkbox-item">
+                                <input type="checkbox" id="backupActivities" checked>
+                                <span class="checkmark"></span>
+                                <span>سجل النشاطات</span>
+                            </label>
+                            
+                            <label class="checkbox-item">
+                                <input type="checkbox" id="backupSettings" checked>
+                                <span class="checkmark"></span>
+                                <span>الإعدادات</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">حفظ الإعدادات</button>
+                        <button type="button" class="btn-secondary close-modal">إلغاء</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+    <script>
+    /**
+     * سكريبت خاص بصفحة الإعدادات
+     */
+    
+    // تهيئة صفحة الإعدادات
+    function initSettingsPage() {
+        // تهيئة التبويبات
+        initTabs();
+        
+        // تهيئة نموذج الملف الشخصي
+        initProfileForm();
+        
+        // تهيئة نموذج إعدادات النادي
+        initGymForm();
+        
+        // تهيئة إعدادات الإشعارات
+        initNotificationsSettings();
+        
+        // تهيئة إعدادات الأمان
+        initSecuritySettings();
+        
+        // تهيئة النسخ الاحتياطي
+        initBackupSettings();
+        
+        // تحميل بيانات النسخ الاحتياطي
+        loadBackupData();
+    }
+    
+    // دالة تهيئة التبويبات
+    function initTabs() {
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const tabPanes = document.querySelectorAll('.tab-pane');
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const tabId = this.getAttribute('data-tab');
+                
+                // إزالة النشاط من جميع الأزرار
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // إضافة النشاط للزر الحالي
+                this.classList.add('active');
+                
+                // إخفاء جميع المحتويات
+                tabPanes.forEach(pane => pane.classList.remove('active'));
+                
+                // إظهار المحتوى المحدد
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+            });
+        });
+    }
+    
+    // دالة تهيئة نموذج الملف الشخصي
+    function initProfileForm() {
+        const profileForm = document.getElementById('profileForm');
+        if (!profileForm) return;
+        
+        // تحميل بيانات المستخدم
+        const currentUser = getCurrentUser();
+        if (currentUser) {
+            document.getElementById('profileFirstName').value = currentUser.name.split(' ')[0] || '';
+            document.getElementById('profileLastName').value = currentUser.name.split(' ')[1] || '';
+            document.getElementById('profileEmailInput').value = currentUser.email || '';
+            document.getElementById('profilePhone').value = currentUser.phone || '';
+        }
+        
+        // إرسال النموذج
+        profileForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const profileData = {
+                firstName: document.getElementById('profileFirstName').value.trim(),
+                lastName: document.getElementById('profileLastName').value.trim(),
+                email: document.getElementById('profileEmailInput').value.trim(),
+                phone: document.getElementById('profilePhone').value.trim(),
+                bio: document.getElementById('profileBio').value.trim()
+            };
+            
+            // التحقق من البيانات
+            if (!validateProfileData(profileData)) return;
+            
+            // تحديث بيانات المستخدم
+            const currentUser = getCurrentUser();
+            if (currentUser) {
+                currentUser.name = `${profileData.firstName} ${profileData.lastName}`;
+                currentUser.email = profileData.email;
+                currentUser.phone = profileData.phone;
+                
+                // حفظ في localStorage
+                localStorage.setItem('loggedInUser', JSON.stringify(currentUser));
+                
+                // تحديث العرض
+                updateUserInfo(currentUser);
+                
+                // تحديث العناصر الأخرى
+                document.getElementById('profileName').textContent = currentUser.name;
+                document.getElementById('profileEmail').textContent = currentUser.email;
+                
+                // عرض رسالة النجاح
+                showAlert('تم الحفظ', 'تم تحديث الملف الشخصي بنجاح', true);
+            }
+        });
+        
+        // زر تغيير الصورة
+        const changeAvatarBtn = document.getElementById('changeAvatarBtn');
+        if (changeAvatarBtn) {
+            changeAvatarBtn.addEventListener('click', () => {
+                showAlert('تغيير الصورة', 'خاصية تغيير صورة الملف الشخصي قيد التطوير', false);
+            });
+        }
+    }
+    
+    // دالة التحقق من بيانات الملف الشخصي
+    function validateProfileData(data) {
+        if (!data.firstName || data.firstName.length < 2) {
+            showAlert('خطأ', 'يرجى إدخال اسم أول صحيح', false);
+            return false;
+        }
+        
+        if (!data.lastName || data.lastName.length < 2) {
+            showAlert('خطأ', 'يرجى إدخال اسم أخير صحيح', false);
+            return false;
+        }
+        
+        if (!data.email || !isValidEmail(data.email)) {
+            showAlert('خطأ', 'يرجى إدخال بريد إلكتروني صحيح', false);
+            return false;
+        }
+        
+        return true;
+    }
+    
+    // دالة التحقق من صحة البريد الإلكتروني
+    function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+    
+    // دالة تهيئة نموذج إعدادات النادي
+    function initGymForm() {
+        const gymForm = document.getElementById('gymForm');
+        if (!gymForm) return;
+        
+        // تحميل إعدادات النادي من localStorage
+        const gymSettings = JSON.parse(localStorage.getItem('gymSettings')) || {};
+        
+        // تعبئة البيانات
+        document.getElementById('gymName').value = gymSettings.name || 'نادي الجيم الرياضي';
+        document.getElementById('gymAddress').value = gymSettings.address || '';
+        document.getElementById('gymPhone').value = gymSettings.phone || '';
+        document.getElementById('gymEmail').value = gymSettings.email || '';
+        document.getElementById('gymWorkingHours').value = gymSettings.workingHours || '';
+        
+        // إرسال النموذج
+        gymForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const gymData = {
+                name: document.getElementById('gymName').value.trim(),
+                address: document.getElementById('gymAddress').value.trim(),
+                phone: document.getElementById('gymPhone').value.trim(),
+                email: document.getElementById('gymEmail').value.trim(),
+                workingHours: document.getElementById('gymWorkingHours').value.trim()
+            };
+            
+            // حفظ في localStorage
+            localStorage.setItem('gymSettings', JSON.stringify(gymData));
+            
+            // عرض رسالة النجاح
+            showAlert('تم الحفظ', 'تم حفظ إعدادات النادي بنجاح', true);
+        });
+        
+        // زر رفع الشعار
+        const uploadLogoBtn = document.getElementById('uploadLogoBtn');
+        if (uploadLogoBtn) {
+            uploadLogoBtn.addEventListener('click', () => {
+                document.getElementById('gymLogo').click();
+            });
+        }
+        
+        const logoInput = document.getElementById('gymLogo');
+        const logoFileName = document.getElementById('logoFileName');
+        
+        if (logoInput && logoFileName) {
+            logoInput.addEventListener('change', function() {
+                if (this.files.length > 0) {
+                    logoFileName.textContent = this.files[0].name;
+                } else {
+                    logoFileName.textContent = 'لم يتم رفع أي ملف';
+                }
+            });
+        }
+    }
+    
+    // دالة تهيئة إعدادات الإشعارات
+    function initNotificationsSettings() {
+        // تحميل إعدادات الإشعارات من localStorage
+        const notificationSettings = JSON.parse(localStorage.getItem('notificationSettings')) || {
+            notifyExpired: true,
+            notifyExpiring: true,
+            notifyNew: true,
+            notifyRenewals: true,
+            methodInApp: true,
+            methodEmail: false,
+            methodSMS: false
+        };
+        
+        // تعيين القيم
+        document.getElementById('notifyExpired').checked = notificationSettings.notifyExpired;
+        document.getElementById('notifyExpiring').checked = notificationSettings.notifyExpiring;
+        document.getElementById('notifyNew').checked = notificationSettings.notifyNew;
+        document.getElementById('notifyRenewals').checked = notificationSettings.notifyRenewals;
+        document.getElementById('methodInApp').checked = notificationSettings.methodInApp;
+        document.getElementById('methodEmail').checked = notificationSettings.methodEmail;
+        document.getElementById('methodSMS').checked = notificationSettings.methodSMS;
+        
+        // زر حفظ إعدادات الإشعارات
+        const saveNotificationsBtn = document.getElementById('saveNotificationsBtn');
+        if (saveNotificationsBtn) {
+            saveNotificationsBtn.addEventListener('click', saveNotificationSettings);
+        }
+    }
+    
+    // دالة حفظ إعدادات الإشعارات
+    function saveNotificationSettings() {
+        const notificationSettings = {
+            notifyExpired: document.getElementById('notifyExpired').checked,
+            notifyExpiring: document.getElementById('notifyExpiring').checked,
+            notifyNew: document.getElementById('notifyNew').checked,
+            notifyRenewals: document.getElementById('notifyRenewals').checked,
+            methodInApp: document.getElementById('methodInApp').checked,
+            methodEmail: document.getElementById('methodEmail').checked,
+            methodSMS: document.getElementById('methodSMS').checked
+        };
+        
+        // حفظ في localStorage
+        localStorage.setItem('notificationSettings', JSON.stringify(notificationSettings));
+        
+        // عرض رسالة النجاح
+        showAlert('تم الحفظ', 'تم حفظ إعدادات الإشعارات بنجاح', true);
+    }
+    
+    // دالة تهيئة إعدادات الأمان
+    function initSecuritySettings() {
+        // زر تغيير كلمة المرور
+        const changePasswordBtn = document.getElementById('changePasswordBtn');
+        if (changePasswordBtn) {
+            changePasswordBtn.addEventListener('click', () => {
+                openModal('changePasswordModal');
+            });
+        }
+        
+        // نموذج تغيير كلمة المرور
+        const changePasswordForm = document.getElementById('changePasswordForm');
+        if (changePasswordForm) {
+            changePasswordForm.addEventListener('submit', handleChangePassword);
+        }
+        
+        // زر عرض الجلسات
+        const viewSessionsBtn = document.getElementById('viewSessionsBtn');
+        if (viewSessionsBtn) {
+            viewSessionsBtn.addEventListener('click', () => {
+                showAlert('جلسات تسجيل الدخول', 'خاصية عرض جلسات تسجيل الدخول قيد التطوير', false);
+            });
+        }
+        
+        // زر حذف جميع البيانات
+        const deleteAllDataBtn = document.getElementById('deleteAllDataBtn');
+        if (deleteAllDataBtn) {
+            deleteAllDataBtn.addEventListener('click', deleteAllData);
+        }
+    }
+    
+    // دالة معالجة تغيير كلمة المرور
+    async function handleChangePassword(e) {
+        e.preventDefault();
+        
+        const currentPassword = document.getElementById('currentPassword').value;
+        const newPassword = document.getElementById('newPassword').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        
+        // التحقق من البيانات
+        if (!currentPassword || !newPassword || !confirmPassword) {
+            showAlert('خطأ', 'يرجى ملء جميع الحقول', false);
+            return;
+        }
+        
+        if (newPassword.length < 8) {
+            showAlert('خطأ', 'يجب أن تكون كلمة المرور الجديدة 8 أحرف على الأقل', false);
+            return;
+        }
+        
+        if (newPassword !== confirmPassword) {
+            showAlert('خطأ', 'كلمة المرور الجديدة وتأكيدها غير متطابقين', false);
+            return;
+        }
+        
+        // التحقق من كلمة المرور الحالية
+        const currentUser = getCurrentUser();
+        if (!currentUser || currentUser.password !== currentPassword) {
+            showAlert('خطأ', 'كلمة المرور الحالية غير صحيحة', false);
+            return;
+        }
+        
+        // تحديث كلمة المرور
+        currentUser.password = newPassword;
+        
+        // تحديث في مصفوفة المستخدمين
+        const userIndex = users.findIndex(u => u.username === currentUser.username);
+        if (userIndex !== -1) {
+            users[userIndex].password = newPassword;
+        }
+        
+        // حفظ في localStorage
+        localStorage.setItem('loggedInUser', JSON.stringify(currentUser));
+        
+        // إغلاق النموذج
+        closeModal('changePasswordModal');
+        
+        // إعادة تعيين النموذج
+        changePasswordForm.reset();
+        
+        // عرض رسالة النجاح
+        showAlert('تم التغيير', 'تم تغيير كلمة المرور بنجاح', true);
+    }
+    
+    // دالة حذف جميع البيانات
+    async function deleteAllData() {
+        const confirmed = await showAlert(
+            'تحذير شديد',
+            'هل أنت متأكد من حذف جميع البيانات؟ هذا الإجراء سيمسح جميع الأعضاء، الاشتراكات، والنشاطات ولا يمكن التراجع عنه.',
+            false
+        );
+        
+        if (!confirmed) return;
+        
+        const confirmedAgain = await showAlert(
+            'تأكيد نهائي',
+            'يرجى كتابة "نعم أحذف" للتأكيد على حذف جميع البيانات:',
+            false
+        );
+        
+        if (!confirmedAgain) return;
+        
+        // حذف جميع البيانات
+        subscriptions = [];
+        activities = [];
+        notifications = [];
+        
+        // حذف من localStorage
+        localStorage.removeItem('gymSubscriptions');
+        localStorage.removeItem('gymActivities');
+        localStorage.removeItem('gymNotifications');
+        
+        // عرض رسالة النجاح
+        showAlert('تم الحذف', 'تم حذف جميع البيانات بنجاح', true);
+        
+        // إعادة تحميل الصفحة بعد ثانيتين
+        setTimeout(() => {
+            window.location.reload();
+        }, 2000);
+    }
+    
+    // دالة تهيئة النسخ الاحتياطي
+    function initBackupSettings() {
+        // زر النسخ الاحتياطي الآن
+        const backupNowBtn = document.getElementById('backupNowBtn');
+        if (backupNowBtn) {
+            backupNowBtn.addEventListener('click', createBackupNow);
+        }
+        
+        // زر استعادة نسخة
+        const restoreBackupBtn = document.getElementById('restoreBackupBtn');
+        if (restoreBackupBtn) {
+            restoreBackupBtn.addEventListener('click', restoreBackup);
+        }
+        
+        // زر النسخ التلقائي
+        const autoBackupBtn = document.getElementById('autoBackupBtn');
+        if (autoBackupBtn) {
+            autoBackupBtn.addEventListener('click', () => {
+                openModal('autoBackupModal');
+            });
+        }
+        
+        // نموذج النسخ التلقائي
+        const autoBackupForm = document.getElementById('autoBackupForm');
+        if (autoBackupForm) {
+            autoBackupForm.addEventListener('submit', saveAutoBackupSettings);
+            
+            // تحميل الإعدادات
+            const autoBackupSettings = JSON.parse(localStorage.getItem('autoBackupSettings')) || {};
+            
+            document.getElementById('backupFrequency').value = autoBackupSettings.frequency || 'weekly';
+            document.getElementById('backupTime').value = autoBackupSettings.time || '02:00';
+            document.getElementById('backupRetention').value = autoBackupSettings.retention || 30;
+            document.getElementById('backupMembers').checked = autoBackupSettings.backupMembers !== false;
+            document.getElementById('backupActivities').checked = autoBackupSettings.backupActivities !== false;
+            document.getElementById('backupSettings').checked = autoBackupSettings.backupSettings !== false;
+        }
+    }
+    
+    // دالة تحميل بيانات النسخ الاحتياطي
+    function loadBackupData() {
+        // الحصول على سجل النسخ الاحتياطية من localStorage
+        const backupHistory = JSON.parse(localStorage.getItem('backupHistory')) || [];
+        
+        // تحديث الإحصائيات
+        document.getElementById('backupCount').textContent = backupHistory.length;
+        
+        // حساب حجم التخزين (محاكاة)
+        const backupSize = backupHistory.length * 0.5; // 0.5 MB لكل نسخة
+        document.getElementById('backupSize').textContent = `${backupSize.toFixed(1)} MB`;
+        
+        // آخر نسخة احتياطية
+        if (backupHistory.length > 0) {
+            const lastBackup = backupHistory[backupHistory.length - 1];
+            document.getElementById('lastBackupDate').textContent = formatDate(lastBackup.date);
+        } else {
+            document.getElementById('lastBackupDate').textContent = '-';
+        }
+        
+        // عرض سجل النسخ الاحتياطية
+        displayBackupHistory(backupHistory);
+    }
+    
+    // دالة عرض سجل النسخ الاحتياطية
+    function displayBackupHistory(backupHistory) {
+        const historyList = document.getElementById('backupHistoryList');
+        if (!historyList) return;
+        
+        if (backupHistory.length === 0) {
+            historyList.innerHTML = `
+                <div class="no-backups">
+                    <i class="fas fa-database"></i>
+                    <p>لا توجد نسخ احتياطية سابقة</p>
+                </div>
+            `;
+            return;
+        }
+        
+        let historyHtml = '';
+        
+        // عرض آخر 5 نسخ احتياطية
+        const recentBackups = backupHistory.slice(-5).reverse();
+        
+        recentBackups.forEach(backup => {
+            historyHtml += `
+                <div class="history-item">
+                    <div class="history-icon">
+                        <i class="fas fa-save"></i>
+                    </div>
+                    <div class="history-content">
+                        <h5>نسخة احتياطية</h5>
+                        <p>تم إنشاؤها في ${formatDateTime(backup.date)}</p>
+                        <small>الحجم: ${backup.size || '0.5'} MB | العناصر: ${backup.items || 3}</small>
+                    </div>
+                    <div class="history-actions">
+                        <button class="btn-download-backup" data-id="${backup.id}" title="تحميل">
+                            <i class="fas fa-download"></i>
+                        </button>
+                        <button class="btn-delete-backup" data-id="${backup.id}" title="حذف">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+        });
+        
+        historyList.innerHTML = historyHtml;
+        
+        // إضافة الأحداث للأزرار
+        document.querySelectorAll('.btn-download-backup').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const backupId = this.getAttribute('data-id');
+                downloadBackup(backupId);
+            });
+        });
+        
+        document.querySelectorAll('.btn-delete-backup').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const backupId = this.getAttribute('data-id');
+                deleteBackup(backupId);
+            });
+        });
+    }
+    
+    // دالة تنسيق التاريخ والوقت
+    function formatDateTime(dateTimeStr) {
+        const date = new Date(dateTimeStr);
+        return date.toLocaleString('ar-EG', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    }
+    
+    // دالة إنشاء نسخة احتياطية الآن
+    function createBackupNow() {
+        // بيانات النسخة الاحتياطية
+        const backupData = {
+            id: Date.now(),
+            date: new Date().toISOString(),
+            data: {
+                subscriptions: subscriptions,
+                activities: activities,
+                packages: packages,
+                settings: {
+                    gymSettings: JSON.parse(localStorage.getItem('gymSettings')) || {},
+                    notificationSettings: JSON.parse(localStorage.getItem('notificationSettings')) || {}
+                }
+            },
+            size: '0.5',
+            items: 4
+        };
+        
+        // الحصول على سجل النسخ الاحتياطية الحالي
+        const backupHistory = JSON.parse(localStorage.getItem('backupHistory')) || [];
+        
+        // إضافة النسخة الجديدة
+        backupHistory.push(backupData);
+        
+        // حفظ في localStorage
+        localStorage.setItem('backupHistory', JSON.stringify(backupHistory));
+        
+        // تحديث العرض
+        loadBackupData();
+        
+        // عرض رسالة النجاح
+        showAlert('تم النسخ الاحتياطي', 'تم إنشاء نسخة احتياطية بنجاح', true);
+    }
+    
+    // دالة استعادة نسخة احتياطية
+    async function restoreBackup() {
+        const backupHistory = JSON.parse(localStorage.getItem('backupHistory')) || [];
+        
+        if (backupHistory.length === 0) {
+            showAlert('خطأ', 'لا توجد نسخ احتياطية متاحة للاستعادة', false);
+            return;
+        }
+        
+        const confirmed = await showAlert(
+            'استعادة نسخة احتياطية',
+            'سيتم استبدال جميع البيانات الحالية بالبيانات من النسخة الاحتياطية. هل تريد المتابعة؟',
+            false
+        );
+        
+        if (!confirmed) return;
+        
+        // استخدام آخر نسخة احتياطية
+        const lastBackup = backupHistory[backupHistory.length - 1];
+        
+        // استعادة البيانات
+        if (lastBackup.data.subscriptions) {
+            subscriptions = lastBackup.data.subscriptions;
+            localStorage.setItem('gymSubscriptions', JSON.stringify(subscriptions));
+        }
+        
+        if (lastBackup.data.activities) {
+            activities = lastBackup.data.activities;
+            localStorage.setItem('gymActivities', JSON.stringify(activities));
+        }
+        
+        if (lastBackup.data.packages) {
+            packages = lastBackup.data.packages;
+        }
+        
+        if (lastBackup.data.settings) {
+            if (lastBackup.data.settings.gymSettings) {
+                localStorage.setItem('gymSettings', JSON.stringify(lastBackup.data.settings.gymSettings));
+            }
+            
+            if (lastBackup.data.settings.notificationSettings) {
+                localStorage.setItem('notificationSettings', JSON.stringify(lastBackup.data.settings.notificationSettings));
+            }
+        }
+        
+        // عرض رسالة النجاح
+        showAlert('تم الاستعادة', 'تم استعادة النسخة الاحتياطية بنجاح', true);
+        
+        // إعادة تحميل الصفحة بعد ثانيتين
+        setTimeout(() => {
+            window.location.reload();
+        }, 2000);
+    }
+    
+    // دالة حفظ إعدادات النسخ التلقائي
+    function saveAutoBackupSettings(e) {
+        e.preventDefault();
+        
+        const autoBackupSettings = {
+            frequency: document.getElementById('backupFrequency').value,
+            time: document.getElementById('backupTime').value,
+            retention: parseInt(document.getElementById('backupRetention').value),
+            backupMembers: document.getElementById('backupMembers').checked,
+            backupActivities: document.getElementById('backupActivities').checked,
+            backupSettings: document.getElementById('backupSettings').checked
+        };
+        
+        // حفظ في localStorage
+        localStorage.setItem('autoBackupSettings', JSON.stringify(autoBackupSettings));
+        
+        // إغلاق النموذج
+        closeModal('autoBackupModal');
+        
+        // عرض رسالة النجاح
+        showAlert('تم الحفظ', 'تم حفظ إعدادات النسخ التلقائي بنجاح', true);
+    }
+    
+    // دالة تحميل نسخة احتياطية
+    function downloadBackup(backupId) {
+        const backupHistory = JSON.parse(localStorage.getItem('backupHistory')) || [];
+        const backup = backupHistory.find(b => b.id.toString() === backupId);
+        
+        if (!backup) {
+            showAlert('خطأ', 'النسخة الاحتياطية غير موجودة', false);
+            return;
+        }
+        
+        // تحويل البيانات إلى JSON
+        const dataStr = JSON.stringify(backup.data, null, 2);
+        const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+        
+        // اسم الملف
+        const backupDate = new Date(backup.date).toISOString().split('T')[0];
+        const fileName = `نسخة_احتياطية_${backupDate}_${backup.id}.json`;
+        
+        // إنشاء رابط التحميل
+        const linkElement = document.createElement('a');
+        linkElement.setAttribute('href', dataUri);
+        linkElement.setAttribute('download', fileName);
+        document.body.appendChild(linkElement);
+        linkElement.click();
+        document.body.removeChild(linkElement);
+        
+        showAlert('تم التحميل', 'تم تحميل النسخة الاحتياطية بنجاح', true);
+    }
+    
+    // دالة حذف نسخة احتياطية
+    async function deleteBackup(backupId) {
+        const confirmed = await showAlert(
+            'حذف نسخة احتياطية',
+            'هل أنت متأكد من حذف هذه النسخة الاحتياطية؟',
+            false
+        );
+        
+        if (!confirmed) return;
+        
+        const backupHistory = JSON.parse(localStorage.getItem('backupHistory')) || [];
+        const filteredHistory = backupHistory.filter(b => b.id.toString() !== backupId);
+        
+        // حفظ في localStorage
+        localStorage.setItem('backupHistory', JSON.stringify(filteredHistory));
+        
+        // تحديث العرض
+        loadBackupData();
+        
+        // عرض رسالة النجاح
+        showAlert('تم الحذف', 'تم حذف النسخة الاحتياطية بنجاح', true);
+    }
+    
+    // تشغيل تهيئة الصفحة عند التحميل
+    document.addEventListener('DOMContentLoaded', () => {
+        initSettingsPage();
+    });
+    </script>
+</body>
+</html>

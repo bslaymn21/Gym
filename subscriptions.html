@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الاشتراكات - نظام إدارة الجيم</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- القائمة الجانبية -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <h1>GYM <span>MANAGER</span></h1>
+                </div>
+                <button class="sidebar-close" id="sidebarClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="sidebar-profile">
+                <div class="profile-img">
+                    <img src="https://ui-avatars.com/api/?name=Admin&background=0f4c75&color=fff" alt="صورة المستخدم">
+                </div>
+                <div class="profile-info">
+                    <h3 id="userName">المسؤول الرئيسي</h3>
+                    <p id="userRole">مسؤول</p>
+                    <span class="status online" id="userStatus">متصل</span>
+                </div>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <ul>
+                    <li>
+                        <a href="dashboard.html">
+                            <i class="fas fa-home"></i>
+                            <span>لوحة التحكم</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="members.html">
+                            <i class="fas fa-users"></i>
+                            <span>إدارة الأعضاء</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="renew.html">
+                            <i class="fas fa-redo"></i>
+                            <span>تجديد الاشتراكات</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="calendar.html">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>التقويم والاشتراكات</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="subscriptions.html">
+                            <i class="fas fa-credit-card"></i>
+                            <span>الاشتراكات</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="settings.html">
+                            <i class="fas fa-cog"></i>
+                            <span>الإعدادات</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button class="btn-logout" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>تسجيل الخروج</span>
+                </button>
+            </div>
+        </aside>
+        
+        <!-- طبقة التعتيم للقائمة الجانبية -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        
+        <!-- المحتوى الرئيسي -->
+        <main class="main-content">
+            <!-- شريط الرأس العلوي -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="sidebar-toggle" id="sidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="ابحث في الاشتراكات...">
+                        <button class="clear-search" id="clearSearchBtn">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <button class="search-btn" id="searchBtn">بحث</button>
+                    </div>
+                    <div class="search-results" id="searchResults"></div>
+                </div>
+                
+                <div class="header-right">
+                    <button class="notifications-btn" id="notificationsBtn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-count" id="notificationCount">0</span>
+                    </button>
+                    
+                    <div class="user-menu">
+                        <div class="user-info">
+                            <span id="headerUserName">المسؤول الرئيسي</span>
+                            <small>مسؤول</small>
+                        </div>
+                        <div class="user-avatar">
+                            <img src="https://ui-avatars.com/api/?name=Admin&background=0f4c75&color=fff" alt="صورة المستخدم">
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- محتوى صفحة الاشتراكات -->
+            <div class="dashboard-content">
+                <div class="page-header">
+                    <h2>الاشتراكات</h2>
+                    <p>إدارة أنواع الباقات والأسعار والإيرادات</p>
+                </div>
+                
+                <!-- إحصائيات الاشتراكات -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalRevenue">0 ج.م</h3>
+                            <p>إجمالي الإيرادات</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="monthlyRevenue">0 ج.م</h3>
+                            <p>إيرادات الشهر الحالي</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="goldCount">0</h3>
+                            <p>اشتراكات ذهبية</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="silverCount">0</h3>
+                            <p>اشتراكات فضية</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- أنواع الباقات -->
+                <div class="packages-section">
+                    <div class="section-header">
+                        <h3>أنواع الباقات</h3>
+                        <button class="btn-primary" id="addPackageBtn">
+                            <i class="fas fa-plus"></i> إضافة باقة جديدة
+                        </button>
+                    </div>
+                    
+                    <div class="packages-grid" id="packagesGrid">
+                        <!-- سيتم ملؤه بواسطة JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- تقرير الإيرادات -->
+                <div class="revenue-report">
+                    <div class="section-header">
+                        <h3>تقرير الإيرادات</h3>
+                        <div class="report-period">
+                            <select id="reportPeriod">
+                                <option value="month">هذا الشهر</option>
+                                <option value="last-month">الشهر الماضي</option>
+                                <option value="year">هذه السنة</option>
+                                <option value="custom">مخصص</option>
+                            </select>
+                            <!-- <button class="btn-secondary" id="exportReportBtn">
+                                <i class="fas fa-file-export"></i> تصدير التقرير
+                            </button> -->
+                        </div>
+                    </div>
+                    
+                    <div class="report-chart" id="reportChart">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                    
+                    <div class="report-summary">
+                        <div class="summary-item">
+                            <span>إجمالي الإيرادات:</span>
+                            <strong id="reportTotalRevenue">0 ج.م</strong>
+                        </div>
+                        <div class="summary-item">
+                            <span>عدد الاشتراكات:</span>
+                            <strong id="reportSubscriptionsCount">0</strong>
+                        </div>
+                        <div class="summary-item">
+                            <span>متوسط قيمة الاشتراك:</span>
+                            <strong id="reportAveragePrice">0 ج.م</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- نموذج إضافة/تعديل باقة -->
+    <div id="packageModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="packageModalTitle">إضافة باقة جديدة</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="packageForm">
+                    <div class="form-group">
+                        <label for="packageName">اسم الباقة *</label>
+                        <input type="text" id="packageName" placeholder="مثال: الباقة الذهبية" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="packagePrice">السعر (ج.م) *</label>
+                        <input type="number" id="packagePrice" min="0" step="50" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="packageDuration">المدة (أيام) *</label>
+                        <input type="number" id="packageDuration" min="1" value="30" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="packageDescription">الوصف (اختياري)</label>
+                        <textarea id="packageDescription" rows="3" placeholder="وصف المميزات والخدمات"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="packageColor">لون الباقة</label>
+                        <div class="color-picker">
+                            <input type="color" id="packageColor" value="#f39c12">
+                            <span id="colorPreview"></span>
+                        </div>
+                    </div>
+                   
+                    <div class="package-features">
+                        
+                        <div id="featuresList">
+                            <!-- <div class="feature-item"> 
+                                <input type="text" placeholder="ميزة جديدة" class="feature-input">
+                                <button type="button" class="btn-remove-feature">
+                                    <i class="fas fa-times"></i>
+                                </button> 
+                            </div>
+                        </div> 
+                        <button type="button" class="btn-secondary" id="addFeatureBtn"> 
+                            <i class="fas fa-plus"></i> إضافة ميزة 
+                        </button>-->
+                    </div> 
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary" id="packageSubmitBtn">حفظ الباقة</button>
+                        <button type="button" class="btn-secondary close-modal">إلغاء</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+    /**
+     * سكريبت خاص بصفحة الاشتراكات
+     */
+    
+    // تهيئة صفحة الاشتراكات
+    function initSubscriptionsPage() {
+        // تحديث الإحصائيات
+        updateSubscriptionsStats();
+        
+        // عرض الباقات
+        renderPackages();
+        
+        // تهيئة التقرير
+        initRevenueReport();
+        
+        // تهيئة الأحداث
+        initSubscriptionsEvents();
+    }
+    
+    // دالة تحديث إحصائيات الاشتراكات
+    function updateSubscriptionsStats() {
+        // إجمالي الإيرادات
+        const totalRevenue = activities.reduce((sum, activity) => {
+            return sum + (activity.amount || 0);
+        }, 0);
+        
+        document.getElementById('totalRevenue').textContent = `${totalRevenue} ج.م`;
+        
+        // إيرادات الشهر الحالي
+        const currentMonth = new Date().getMonth() + 1;
+        const monthlyRevenue = activities
+            .filter(activity => {
+                const activityDate = new Date(activity.date);
+                return activityDate.getMonth() + 1 === currentMonth;
+            })
+            .reduce((sum, activity) => sum + (activity.amount || 0), 0);
+        
+        document.getElementById('monthlyRevenue').textContent = `${monthlyRevenue} ج.م`;
+        
+        // عدد الاشتراكات الذهبية
+        const goldCount = subscriptions.filter(sub => 
+            sub.package.includes('ذهبية')
+        ).length;
+        
+        document.getElementById('goldCount').textContent = goldCount;
+        
+        // عدد الاشتراكات الفضية
+        const silverCount = subscriptions.filter(sub => 
+            sub.package.includes('فضية')
+        ).length;
+        
+        document.getElementById('silverCount').textContent = silverCount;
+    }
+    
+    // دالة عرض الباقات
+    function renderPackages() {
+        const packagesGrid = document.getElementById('packagesGrid');
+        if (!packagesGrid) return;
+        
+        let packagesHtml = '';
+        
+        packages.forEach(pkg => {
+            packagesHtml += `
+                <div class="package-card" data-id="${pkg.id}">
+                    <div class="package-header" style="background-color: ${pkg.color || '#f39c12'}">
+                        <h4>${pkg.name}</h4>
+                        <div class="package-price">${pkg.price} ج.م</div>
+                    </div>
+                    <div class="package-body">
+                        <div class="package-duration">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>${pkg.duration} يوم</span>
+                        </div>
+                        
+                        ${pkg.description ? `
+                            <div class="package-description">
+                                <p>${pkg.description}</p>
+                            </div>
+                        ` : ''}
+                        
+                        ${pkg.features && pkg.features.length > 0 ? `
+                            <div class="package-features">
+                                <h5>المميزات:</h5>
+                                <ul>
+                                    ${pkg.features.map(feature => `<li>${feature}</li>`).join('')}
+                                </ul>
+                            </div>
+                        ` : ''}
+                        
+                        <div class="package-stats">
+                            <div class="stat">
+                                <i class="fas fa-users"></i>
+                                <span>${getPackageSubscribersCount(pkg.name)} عضو</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-money-bill"></i>
+                                <span>${getPackageRevenue(pkg.name)} ج.م</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="package-footer">
+                        <button class="btn-edit-package" data-id="${pkg.id}">
+                            <i class="fas fa-edit"></i> تعديل
+                        </button>
+                        <button class="btn-delete-package" data-id="${pkg.id}">
+                            <i class="fas fa-trash"></i> حذف
+                        </button>
+                    </div>
+                </div>
+            `;
+        });
+        
+        packagesGrid.innerHTML = packagesHtml;
+        
+        // إضافة أحداث لأزرار الباقات
+        attachPackageEvents();
+    }
+    
+    // دالة الحصول على عدد المشتركين في باقة
+    function getPackageSubscribersCount(packageName) {
+        return subscriptions.filter(sub => sub.package === packageName).length;
+    }
+    
+    // دالة الحصول على إيرادات باقة
+    function getPackageRevenue(packageName) {
+        return activities
+            .filter(activity => {
+                const subscription = subscriptions.find(sub => 
+                    sub.name === activity.user && sub.package === packageName
+                );
+                return subscription && activity.amount > 0;
+            })
+            .reduce((sum, activity) => sum + activity.amount, 0);
+    }
+    
+    // دالة تهيئة تقرير الإيرادات
+    function initRevenueReport() {
+        // تحديث التقرير
+        updateRevenueReport();
+        
+        // تغيير فترة التقرير
+        const reportPeriod = document.getElementById('reportPeriod');
+        if (reportPeriod) {
+            reportPeriod.addEventListener('change', updateRevenueReport);
+        }
+        
+        // زر تصدير التقرير
+        const exportReportBtn = document.getElementById('exportReportBtn');
+        if (exportReportBtn) {
+            exportReportBtn.addEventListener('click', exportRevenueReport);
+        }
+    }
+    
+    // دالة تحديث تقرير الإيرادات
+    function updateRevenueReport() {
+        const period = document.getElementById('reportPeriod').value;
+        const reportData = getRevenueData(period);
+        
+        // تحديث الملخص
+        document.getElementById('reportTotalRevenue').textContent = `${reportData.totalRevenue} ج.م`;
+        document.getElementById('reportSubscriptionsCount').textContent = reportData.subscriptionsCount;
+        document.getElementById('reportAveragePrice').textContent = 
+            reportData.subscriptionsCount > 0 ? 
+            `${Math.round(reportData.totalRevenue / reportData.subscriptionsCount)} ج.م` : 
+            '0 ج.م';
+        
+        // تحديث الرسم البياني
+        updateRevenueChart(reportData);
+    }
+    
+    // دالة الحصول على بيانات الإيرادات
+    function getRevenueData(period) {
+        const today = new Date();
+        let startDate, endDate;
+        
+        switch(period) {
+            case 'month':
+                startDate = new Date(today.getFullYear(), today.getMonth(), 1);
+                endDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+                break;
+                
+            case 'last-month':
+                startDate = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+                endDate = new Date(today.getFullYear(), today.getMonth(), 0);
+                break;
+                
+            case 'year':
+                startDate = new Date(today.getFullYear(), 0, 1);
+                endDate = new Date(today.getFullYear(), 11, 31);
+                break;
+                
+            default:
+                startDate = new Date(2024, 0, 1);
+                endDate = today;
+        }
+        
+        // تصفية النشاطات حسب الفترة
+        const periodActivities = activities.filter(activity => {
+            const activityDate = new Date(activity.date);
+            return activityDate >= startDate && activityDate <= endDate && activity.amount > 0;
+        });
+        
+        // حساب البيانات
+        const totalRevenue = periodActivities.reduce((sum, activity) => sum + activity.amount, 0);
+        const subscriptionsCount = periodActivities.length;
+        
+        // تجميع البيانات حسب الشهر
+        const monthlyData = {};
+        periodActivities.forEach(activity => {
+            const date = new Date(activity.date);
+            const monthYear = `${date.getMonth() + 1}/${date.getFullYear()}`;
+            
+            if (!monthlyData[monthYear]) {
+                monthlyData[monthYear] = 0;
+            }
+            
+            monthlyData[monthYear] += activity.amount;
+        });
+        
+        return {
+            totalRevenue,
+            subscriptionsCount,
+            monthlyData
+        };
+    }
+    
+    // دالة تحديث الرسم البياني للإيرادات
+    function updateRevenueChart(reportData) {
+        const ctx = document.getElementById('revenueChart');
+        if (!ctx) return;
+        
+        // تحضير البيانات للرسم البياني
+        const labels = Object.keys(reportData.monthlyData).sort();
+        const data = labels.map(label => reportData.monthlyData[label]);
+        
+        // إنشاء الرسم البياني
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'الإيرادات (ج.م)',
+                    data: data,
+                    backgroundColor: 'rgba(15, 76, 117, 0.7)',
+                    borderColor: 'rgba(15, 76, 117, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'الإيرادات الشهرية'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return value + ' ج.م';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+    
+    // دالة تهيئة أحداث صفحة الاشتراكات
+    function initSubscriptionsEvents() {
+        // زر إضافة باقة جديدة
+        const addPackageBtn = document.getElementById('addPackageBtn');
+        if (addPackageBtn) {
+            addPackageBtn.addEventListener('click', () => {
+                openPackageModal();
+            });
+        }
+        
+        // نموذج الباقة
+        const packageForm = document.getElementById('packageForm');
+        if (packageForm) {
+            packageForm.addEventListener('submit', handlePackageSubmit);
+        }
+        
+        // زر إضافة ميزة
+        
+        
+        // معاينة اللون
+        const colorInput = document.getElementById('packageColor');
+        const colorPreview = document.getElementById('colorPreview');
+        
+        if (colorInput && colorPreview) {
+            colorInput.addEventListener('input', function() {
+                colorPreview.style.backgroundColor = this.value;
+            });
+            
+            // تعيين اللون الافتراضي
+            colorPreview.style.backgroundColor = colorInput.value;
+        }
+    }
+    
+    // دالة إضافة أحداث للباقات
+    function attachPackageEvents() {
+        // أزرار تعديل الباقات
+        document.querySelectorAll('.btn-edit-package').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const packageId = parseInt(this.getAttribute('data-id'));
+                editPackage(packageId);
+            });
+        });
+        
+        // أزرار حذف الباقات
+        document.querySelectorAll('.btn-delete-package').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const packageId = parseInt(this.getAttribute('data-id'));
+                deletePackage(packageId);
+            });
+        });
+    }
+    
+    // دالة فتح نموذج الباقة
+    function openPackageModal(packageId = null) {
+        const isEdit = packageId !== null;
+        const modalTitle = document.getElementById('packageModalTitle');
+        const submitBtn = document.getElementById('packageSubmitBtn');
+        
+        if (isEdit) {
+            // وضع التعديل
+            const pkg = packages.find(p => p.id === packageId);
+            if (!pkg) return;
+            
+            modalTitle.textContent = 'تعديل الباقة';
+            submitBtn.textContent = 'تحديث الباقة';
+            
+            // تعبئة البيانات
+            document.getElementById('packageName').value = pkg.name;
+            document.getElementById('packagePrice').value = pkg.price;
+            document.getElementById('packageDuration').value = pkg.duration;
+            document.getElementById('packageDescription').value = pkg.description || '';
+            document.getElementById('packageColor').value = pkg.color || '#f39c12';
+            
+            // تعبئة المميزات
+            const featuresList = document.getElementById('featuresList');
+            featuresList.innerHTML = '';
+            
+            if (pkg.features && pkg.features.length > 0) {
+                pkg.features.forEach(feature => {
+                    addFeatureField(feature);
+                });
+            } else {
+                addFeatureField();
+            }
+            
+            // حفظ معرف الباقة في النموذج
+            packageForm.dataset.editId = packageId;
+        } else {
+            // وضع الإضافة
+            modalTitle.textContent = 'إضافة باقة جديدة';
+            submitBtn.textContent = 'حفظ الباقة';
+            
+            // إعادة تعيين النموذج
+            packageForm.reset();
+            document.getElementById('packageDuration').value = 30;
+            document.getElementById('packageColor').value = '#f39c12';
+            
+            // إضافة حقل ميزة واحد
+            const featuresList = document.getElementById('featuresList');
+            featuresList.innerHTML = '';
+            addFeatureField();
+            
+            // إزالة معرف التعديل
+            delete packageForm.dataset.editId;
+        }
+        
+        // تحديث معاينة اللون
+        const colorPreview = document.getElementById('colorPreview');
+        if (colorPreview) {
+            colorPreview.style.backgroundColor = document.getElementById('packageColor').value;
+        }
+        
+        // فتح النموذج
+        openModal('packageModal');
+    }
+    
+    // // دالة إضافة حقل ميزة
+    // function addFeatureField(featureText = '') {
+    //     const featuresList = document.getElementById('featuresList');
+    //     const featureItem = document.createElement('div');
+    //     featureItem.className = 'feature-item';
+        
+    //     featureItem.innerHTML = `
+    //         <input type="text" class="feature-input" placeholder="ميزة جديدة" value="${featureText}">
+    //         <button type="button" class="btn-remove-feature">
+    //             <i class="fas fa-times"></i>
+    //         </button>
+    //     `;
+        
+    //     featuresList.appendChild(featureItem);
+        
+    //     // إضافة حدث لحذف الميزة
+    //     const removeBtn = featureItem.querySelector('.btn-remove-feature');
+    //     removeBtn.addEventListener('click', function() {
+    //         if (featuresList.children.length > 1) {
+    //             featureItem.remove();
+    //         } else {
+    //             // إذا كان الحقل الأخير، نعيد تعيينه بدلاً من حذفه
+    //             featureItem.querySelector('.feature-input').value = '';
+    //         }
+    //     });
+    // }
+    
+    // دالة معالجة حفظ الباقة
+    async function handlePackageSubmit(e) {
+        e.preventDefault();
+        
+        const isEdit = e.target.dataset.editId !== undefined;
+        const packageId = isEdit ? parseInt(e.target.dataset.editId) : packages.length + 1;
+        
+        // جمع البيانات
+        const packageData = {
+            id: packageId,
+            name: document.getElementById('packageName').value.trim(),
+            price: parseFloat(document.getElementById('packagePrice').value),
+            duration: parseInt(document.getElementById('packageDuration').value),
+            description: document.getElementById('packageDescription').value.trim(),
+            color: document.getElementById('packageColor').value
+        };
+        
+        // جمع المميزات
+        const features = [];
+        document.querySelectorAll('.feature-input').forEach(input => {
+            if (input.value.trim()) {
+                features.push(input.value.trim());
+            }
+        });
+        
+        packageData.features = features;
+        
+        // التحقق من البيانات
+        if (!validatePackageData(packageData)) return;
+        
+        if (isEdit) {
+            // تحديث الباقة
+            const index = packages.findIndex(p => p.id === packageId);
+            if (index !== -1) {
+                packages[index] = packageData;
+            }
+        } else {
+            // إضافة باقة جديدة
+            packages.push(packageData);
+        }
+        
+        // حفظ البيانات
+        saveData();
+        
+        // إغلاق النموذج
+        closeModal('packageModal');
+        
+        // تحديث العرض
+        renderPackages();
+        updateSubscriptionsStats();
+        
+        // عرض رسالة النجاح
+        const message = isEdit ? 'تم تحديث الباقة بنجاح' : 'تم إضافة الباقة الجديدة بنجاح';
+        showAlert('تم الحفظ', message, true);
+    }
+    
+    // دالة التحقق من بيانات الباقة
+    function validatePackageData(data) {
+        if (!data.name || data.name.length < 2) {
+            showAlert('خطأ', 'يرجى إدخال اسم صحيح للباقة', false);
+            return false;
+        }
+        
+        if (data.price <= 0) {
+            showAlert('خطأ', 'يرجى إدخال سعر صحيح', false);
+            return false;
+        }
+        
+        if (data.duration <= 0) {
+            showAlert('خطأ', 'يرجى إدخال مدة صحيحة', false);
+            return false;
+        }
+        
+        return true;
+    }
+    
+    // دالة تعديل الباقة
+    function editPackage(packageId) {
+        openPackageModal(packageId);
+    }
+    
+    // دالة حذف الباقة
+    async function deletePackage(packageId) {
+        // التحقق إذا كانت الباقة مستخدمة
+        const isUsed = subscriptions.some(sub => 
+            sub.package.includes(packages.find(p => p.id === packageId)?.name || '')
+        );
+        
+        if (isUsed) {
+            showAlert('خطأ', 'لا يمكن حذف الباقة لأنها مستخدمة في اشتراكات حالية', false);
+            return;
+        }
+        
+        const confirmed = await showAlert(
+            'تأكيد الحذف',
+            'هل أنت متأكد من حذف هذه الباقة؟ هذا الإجراء لا يمكن التراجع عنه.',
+            false
+        );
+        
+        if (!confirmed) return;
+        
+        // حذف الباقة
+        const index = packages.findIndex(p => p.id === packageId);
+        if (index !== -1) {
+            packages.splice(index, 1);
+            
+            // حفظ البيانات
+            saveData();
+            
+            // تحديث العرض
+            renderPackages();
+            
+            // عرض رسالة النجاح
+            showAlert('تم الحذف', 'تم حذف الباقة بنجاح', true);
+        }
+    }
+    
+    // دالة تصدير تقرير الإيرادات
+    function exportRevenueReport() {
+        const period = document.getElementById('reportPeriod').value;
+        const reportData = getRevenueData(period);
+        
+        const exportData = {
+            فترة_التقرير: period,
+            إجمالي_الإيرادات: `${reportData.totalRevenue} ج.م`,
+            عدد_الاشتراكات: reportData.subscriptionsCount,
+            متوسط_قيمة_الاشتراك: reportData.subscriptionsCount > 0 ? 
+                `${Math.round(reportData.totalRevenue / reportData.subscriptionsCount)} ج.م` : '0 ج.م',
+            الإيرادات_الشهرية: reportData.monthlyData
+        };
+        
+        const dataStr = JSON.stringify(exportData, null, 2);
+        const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+        
+        const exportFileName = `تقرير_الإيرادات_${new Date().toISOString().split('T')[0]}.json`;
+        
+        const linkElement = document.createElement('a');
+        linkElement.setAttribute('href', dataUri);
+        linkElement.setAttribute('download', exportFileName);
+        document.body.appendChild(linkElement);
+        linkElement.click();
+        document.body.removeChild(linkElement);
+        
+        showAlert('تم التصدير', 'تم تصدير تقرير الإيرادات بنجاح', true);
+    }
+    
+    // تشغيل تهيئة الصفحة عند التحميل
+    document.addEventListener('DOMContentLoaded', () => {
+        initSubscriptionsPage();
+    });
+    </script>
+</body>
+</html>

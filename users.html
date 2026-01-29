@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GYM MANAGER - إدارة المستخدمين</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- القائمة الجانبية -->
+        <div class="sidebar" id="sidebar">
+            <!-- نفس القائمة الموجودة في dashboard.html -->
+        </div>
+        
+        <!-- طبقة التعتيم للقائمة على الهواتف -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        
+        <!-- المحتوى الرئيسي -->
+        <div class="main-content">
+            <!-- شريط الرأس العلوي -->
+            <header class="top-header">
+                <!-- نفس الشريط الموجود في dashboard.html -->
+            </header>
+            
+            <!-- محتوى الصفحة -->
+            <div class="dashboard-content">
+                <div class="page-header">
+                    <h2><i class="fas fa-users-cog"></i> إدارة المستخدمين</h2>
+                    <p>إدارة وإضافة وتعديل وحذف مستخدمي النظام</p>
+                </div>
+                
+                <!-- الإحصائيات -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalUsers">0</h3>
+                            <p>إجمالي المستخدمين</p>
+                        </div>
+                        <button class="stat-link" onclick="filterUsers('all')">
+                            عرض الكل <i class="fas fa-arrow-left"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="adminUsers">0</h3>
+                            <p>المشرفين</p>
+                        </div>
+                        <button class="stat-link" onclick="filterUsers('admin')">
+                            عرض <i class="fas fa-arrow-left"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="assistantUsers">0</h3>
+                            <p>المساعدين</p>
+                        </div>
+                        <button class="stat-link" onclick="filterUsers('assistant')">
+                            عرض <i class="fas fa-arrow-left"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="viewerUsers">0</h3>
+                            <p>الزوار</p>
+                        </div>
+                        <button class="stat-link" onclick="filterUsers('viewer')">
+                            عرض <i class="fas fa-arrow-left"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- الإجراءات السريعة -->
+                <div class="quick-actions">
+                    <div class="section-header">
+                        <h3>الإجراءات السريعة</h3>
+                    </div>
+                    <div class="actions-grid">
+                        <button class="action-btn" onclick="openModal('addUserModal')">
+                            <i class="fas fa-user-plus"></i>
+                            <span>إضافة مستخدم جديد</span>
+                        </button>
+                        
+                        <button class="action-btn" onclick="exportUsers()">
+                            <i class="fas fa-file-export"></i>
+                            <span>تصدير المستخدمين</span>
+                        </button>
+                        
+                        <button class="action-btn" onclick="printUsers()">
+                            <i class="fas fa-print"></i>
+                            <span>طباعة القائمة</span>
+                        </button>
+                        
+                        <button class="action-btn" onclick="refreshUsers()">
+                            <i class="fas fa-sync-alt"></i>
+                            <span>تحديث البيانات</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- الفلاتر والبحث -->
+                <div class="filter-section">
+                    <h3><i class="fas fa-filter"></i> تصفية المستخدمين</h3>
+                    <div class="filter-grid">
+                        <div class="filter-group">
+                            <label>نوع المستخدم:</label>
+                            <select id="userTypeFilter" onchange="filterUsersTable()">
+                                <option value="all">جميع الأنواع</option>
+                                <option value="admin">المشرفون</option>
+                                <option value="assistant">المساعدون</option>
+                                <option value="viewer">الزوار</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label>حالة المستخدم:</label>
+                            <select id="userStatusFilter" onchange="filterUsersTable()">
+                                <option value="all">جميع الحالات</option>
+                                <option value="online">متصل</option>
+                                <option value="offline">غير متصل</option>
+                                <option value="suspended">موقوف</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label>بحث:</label>
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="userSearch" placeholder="ابحث باسم المستخدم أو الاسم..." oninput="filterUsersTable()">
+                                <button class="clear-search" id="clearUserSearch">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- جدول المستخدمين -->
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>قائمة المستخدمين</h3>
+                        <div class="table-actions">
+                            <span>عدد النتائج: <strong id="userCount">0</strong></span>
+                            <div class="selection-buttons">
+                                <button class="btn-secondary" onclick="selectAllUsers()">
+                                    <i class="fas fa-check-square"></i> تحديد الكل
+                                </button>
+                                <button class="btn-secondary" onclick="deselectAllUsers()">
+                                    <i class="far fa-square"></i> إلغاء الكل
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="renew-table" id="usersTable">
+                            <thead>
+                                <tr>
+                                    <th width="50">
+                                        <input type="checkbox" id="selectAllUsers" onclick="toggleSelectAll()">
+                                    </th>
+                                    <th>المستخدم</th>
+                                    <th>نوع المستخدم</th>
+                                    <th>حالة الحساب</th>
+                                    <th>آخر دخول</th>
+                                    <th>تاريخ الإنشاء</th>
+                                    <th>الصلاحيات</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody">
+                                <!-- سيتم تعبئة البيانات جافاسكريبت -->
+                                <tr id="noUsersRow">
+                                    <td colspan="8">
+                                        <div class="no-data">
+                                            <i class="fas fa-users-slash"></i>
+                                            <p>لا يوجد مستخدمين لعرضهم</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="table-footer">
+                        <div class="pagination">
+                            <button class="pagination-btn" id="prevPage" onclick="changePage(-1)">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                            <span class="page-numbers" id="pageInfo">1 من 1</span>
+                            <button class="pagination-btn" id="nextPage" onclick="changePage(1)">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                        </div>
+                        <div class="rows-per-page">
+                            <span>عرض</span>
+                            <select id="rowsPerPage" onchange="changeRowsPerPage()">
+                                <option value="10">10</option>
+                                <option value="25" selected>25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                            <span>صف في كل صفحة</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- نموذج إضافة مستخدم -->
+    <div class="modal" id="addUserModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-plus"></i> إضافة مستخدم جديد</h3>
+                <button class="close-modal" onclick="closeModal('addUserModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="addUserForm" onsubmit="addNewUser(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="newUserName">الاسم الكامل *</label>
+                            <input type="text" id="newUserName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newUserUsername">اسم المستخدم *</label>
+                            <input type="text" id="newUserUsername" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="newUserPassword">كلمة المرور *</label>
+                            <input type="password" id="newUserPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newUserConfirmPassword">تأكيد كلمة المرور *</label>
+                            <input type="password" id="newUserConfirmPassword" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="newUserType">نوع المستخدم *</label>
+                            <select id="newUserType" required onchange="updatePermissions()">
+                                <option value="">اختر النوع</option>
+                                <option value="admin">مشرف</option>
+                                <option value="assistant">مساعد</option>
+                                <option value="viewer">زائر</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="newUserStatus">حالة الحساب *</label>
+                            <select id="newUserStatus" required>
+                                <option value="online">متصل</option>
+                                <option value="offline">غير متصل</option>
+                                <option value="suspended">موقوف</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- الصلاحيات الديناميكية -->
+                    <div class="form-group" id="permissionsSection" style="display: none;">
+                        <label>الصلاحيات</label>
+                        <div class="permissions-grid" id="permissionsGrid">
+                            <!-- سيتم تعبئتها جافاسكريبت -->
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-save"></i> إضافة المستخدم
+                        </button>
+                        <button type="button" class="btn-secondary" onclick="closeModal('addUserModal')">
+                            <i class="fas fa-times"></i> إلغاء
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- نموذج تعديل المستخدم -->
+    <div class="modal" id="editUserModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-edit"></i> تعديل المستخدم</h3>
+                <button class="close-modal" onclick="closeModal('editUserModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <!-- سيتم تعبئتها جافاسكريبت -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- نموذج تفاصيل المستخدم -->
+    <div class="modal" id="userDetailsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-circle"></i> تفاصيل المستخدم</h3>
+                <button class="close-modal" onclick="closeModal('userDetailsModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <!-- سيتم تعبئتها جافاسكريبت -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- الرسائل المنبثقة -->
+    <div id="customAlert" class="modal">
+        <!-- نفس الرسائل الموجودة -->
+    </div>
+    
+    <script src="script.js"></script>
+    <script src="users.js"></script>
+</body>
+</html>

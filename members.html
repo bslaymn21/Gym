@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة الأعضاء - نظام إدارة الجيم</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- القائمة الجانبية -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <h1>GYM <span>MANAGER</span></h1>
+                </div>
+                <button class="sidebar-close" id="sidebarClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="sidebar-profile">
+                <div class="profile-img">
+                    <img src="https://ui-avatars.com/api/?name=Admin&background=0f4c75&color=fff" alt="صورة المستخدم">
+                </div>
+                <div class="profile-info">
+                    <h3 id="userName">المسؤول الرئيسي</h3>
+                    <p id="userRole">مسؤول</p>
+                    <span class="status online" id="userStatus">متصل</span>
+                </div>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <ul>
+                    <li>
+                        <a href="dashboard.html">
+                            <i class="fas fa-home"></i>
+                            <span>لوحة التحكم</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="members.html">
+                            <i class="fas fa-users"></i>
+                            <span>إدارة الأعضاء</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="renew.html">
+                            <i class="fas fa-redo"></i>
+                            <span>تجديد الاشتراكات</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="calendar.html">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>التقويم والاشتراكات</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="subscriptions.html">
+                            <i class="fas fa-credit-card"></i>
+                            <span>الاشتراكات</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="settings.html">
+                            <i class="fas fa-cog"></i>
+                            <span>الإعدادات</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button class="btn-logout" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>تسجيل الخروج</span>
+                </button>
+            </div>
+        </aside>
+        
+        <!-- طبقة التعتيم للقائمة الجانبية -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        
+        <!-- المحتوى الرئيسي -->
+        <main class="main-content">
+            <!-- شريط الرأس العلوي -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="sidebar-toggle" id="sidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="ابحث عن عضو بالاسم أو الكود...">
+                        <button class="clear-search" id="clearSearchBtn">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <button class="search-btn" id="searchBtn">بحث</button>
+                    </div>
+                    <div class="search-results" id="searchResults"></div>
+                </div>
+                
+                <div class="header-right">
+                    <button class="notifications-btn" id="notificationsBtn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-count" id="notificationCount">0</span>
+                    </button>
+                    
+                    <div class="user-menu">
+                        <div class="user-info">
+                            <span id="headerUserName">المسؤول الرئيسي</span>
+                            <small>مسؤول</small>
+                        </div>
+                        <div class="user-avatar">
+                            <img src="https://ui-avatars.com/api/?name=Admin&background=0f4c75&color=fff" alt="صورة المستخدم">
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- محتوى صفحة إدارة الأعضاء -->
+            <div class="dashboard-content">
+                <div class="page-header">
+                    <h2>إدارة الأعضاء</h2>
+                    <p>إدارة وإضافة وتجديد وإلغاء اشتراكات الأعضاء</p>
+                </div>
+                
+                <!-- أزرار التحكم -->
+                <div class="control-actions">
+                    <button class="btn-primary" id="addMemberBtn">
+                        <i class="fas fa-user-plus"></i> إضافة عضو جديد
+                    </button>
+                    <button class="btn-secondary" id="renewMembershipBtn">
+                        <i class="fas fa-redo"></i> تجديد اشتراك
+                    </button>
+                    <button class="btn-danger" id="cancelMembershipBtn">
+                        <i class="fas fa-user-times"></i> إلغاء اشتراك
+                    </button>
+                    
+                    <div class="filter-group">
+                        <select id="filterStatus">
+                            <option value="all">جميع الأعضاء</option>
+                            <option value="active">النشطين فقط</option>
+                            <option value="expired">المنتهي اشتراكهم</option>
+                            <option value="about-to-expire">على وشك الانتهاء</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- جدول الأعضاء -->
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>قائمة الأعضاء</h3>
+                        <div class="table-actions">
+                            <span id="membersCount">0 عضو</span>
+                          
+                        </div>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="members-table" id="membersTable">
+                            <thead>
+                                <tr>
+                                    <th width="50">
+                                        <input type="checkbox" id="selectAll">
+                                    </th>
+                                    <th width="100">كود العضو</th>
+                                    <th>الاسم</th>
+                                    <th width="80">العمر</th>
+                                    <th width="80">الجنس</th>
+                                    <th width="120">الباقة</th>
+                                    <th width="120">تاريخ البدء</th>
+                                    <th width="120">تاريخ الانتهاء</th>
+                                    <th width="100">الحالة</th>
+                                    <th width="150">الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="membersTableBody">
+                                <!-- سيتم ملؤه بواسطة JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="table-footer">
+                        <div class="pagination">
+                            <button class="pagination-btn" id="prevPageBtn" disabled>
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                            <span class="page-numbers">
+                                <span class="current-page">1</span> من <span class="total-pages">1</span>
+                            </span>
+                            <button class="pagination-btn" id="nextPageBtn">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="rows-per-page">
+                            <span>عرض</span>
+                            <select id="rowsPerPage">
+                                <option value="10">10</option>
+                                <option value="25" selected>25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                            <span>صف في كل صفحة</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- نموذج إضافة عضو جديد -->
+    <div id="addMemberModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>إضافة عضو جديد</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="addMemberForm">
+                    <div class="form-group">
+                        <label for="memberName">اسم العضو *</label>
+                        <input type="text" id="memberName" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="memberAge">العمر *</label>
+                            <input type="number" id="memberAge" min="16" max="70" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="memberGender">الجنس *</label>
+                            <select id="memberGender" required>
+                                <option value="">اختر الجنس</option>
+                                <option value="male">ذكر</option>
+                                <option value="female">أنثى</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="memberPhone">رقم الهاتف *</label>
+                        <input type="tel" id="memberPhone" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="memberPackage">الباقة *</label>
+                        <select id="memberPackage" required>
+                            <option value="">اختر الباقة</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="memberPayment">وسيلة الدفع *</label>
+                        <select id="memberPayment" required>
+                            <option value="">اختر وسيلة الدفع</option>
+                            <option value="كاش">كاش</option>
+                            <option value="فودافون كاش">فودافون كاش</option>
+                            <option value="انستا باي">انستا باي</option>
+                            <option value="بطاقة ائتمان">بطاقة ائتمان</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="memberStartDate">تاريخ البدء *</label>
+                        <input type="date" id="memberStartDate" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="memberDuration">المدة (أشهر)</label>
+                        <select id="memberDuration">
+                            <option value="1">شهر واحد</option>
+                            <option value="3">3 أشهر</option>
+                            <option value="6">6 أشهر</option>
+                            <option value="12">12 شهر</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">إضافة العضو</button>
+                        <button type="button" class="btn-secondary close-modal">إلغاء</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- نموذج عرض تفاصيل العضو -->
+    <div id="memberDetailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>تفاصيل العضو</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="member-details" id="memberDetailsContent">
+                    <!-- سيتم ملؤه بواسطة JavaScript -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="editMemberBtn">تعديل</button>
+                <button class="btn-primary" id="renewMemberBtn">تجديد الاشتراك</button>
+                <button class="btn-danger" id="cancelMemberBtn">إلغاء الاشتراك</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- نموذج تجديد الاشتراك -->
+    <div id="renewMembershipModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>تجديد اشتراك العضو</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="renewMembershipForm">
+                    <div class="form-group">
+                        <label for="renewMemberName">اسم العضو</label>
+                        <input type="text" id="renewMemberName" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="renewMemberCode">كود العضو</label>
+                        <input type="text" id="renewMemberCode" readonly>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="renewPackage">الباقة الجديدة *</label>
+                            <select id="renewPackage" required>
+                                <option value="">اختر الباقة</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="renewDuration">المدة (أشهر) *</label>
+                            <select id="renewDuration" required>
+                                <option value="1">شهر واحد</option>
+                                <option value="3">3 أشهر</option>
+                                <option value="6">6 أشهر</option>
+                                <option value="12">12 شهر</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="renewPayment">وسيلة الدفع *</label>
+                        <select id="renewPayment" required>
+                            <option value="">اختر وسيلة الدفع</option>
+                            <option value="كاش">كاش</option>
+                            <option value="فودافون كاش">فودافون كاش</option>
+                            <option value="انستا باي">انستا باي</option>
+                            <option value="بطاقة ائتمان">بطاقة ائتمان</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="renewStartDate">تاريخ البدء *</label>
+                        <input type="date" id="renewStartDate" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="renewAmount">المبلغ *</label>
+                        <input type="number" id="renewAmount" required>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">تجديد الاشتراك</button>
+                        <button type="button" class="btn-secondary close-modal">إلغاء</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+    <script>
+    /**
+     * سكريبت خاص بصفحة إدارة الأعضاء
+     */
+    
+    // متغيرات الصفحة
+    let currentPage = 1;
+    let rowsPerPage = 25;
+    let filteredMembers = [];
+    
+    // تهيئة صفحة الأعضاء
+    function initMembersPage() {
+        // تحميل الأعضاء
+        loadMembers();
+        
+        // تهيئة الأحداث
+        initEvents();
+        
+        // تحديث العداد
+        updateCounters();
+    }
+    
+    // دالة تحميل الأعضاء
+    function loadMembers() {
+        const filter = document.getElementById('filterStatus').value;
+        
+        // تطبيق الفلترة
+        filteredMembers = applyFilter(subscriptions, filter);
+        
+        // عرض الأعضاء
+        renderMembersTable();
+        
+        // تحديث الترحيم
+        updatePagination();
+    }
+    
+    // دالة تطبيق الفلترة
+    function applyFilter(members, filterType) {
+        switch(filterType) {
+            case 'active':
+                return members.filter(m => m.status === 'active');
+                
+            case 'expired':
+                return members.filter(m => {
+                    if (m.status === 'expired') return true;
+                    
+                    const endDate = new Date(m.endDate);
+                    const today = new Date();
+                    return endDate < today && m.status === 'active';
+                });
+                
+            case 'about-to-expire':
+                return members.filter(m => {
+                    if (m.status !== 'active') return false;
+                    
+                    const endDate = new Date(m.endDate);
+                    const today = new Date();
+                    const daysUntilExpiry = Math.ceil((endDate - today) / (1000 * 60 * 60 * 24));
+                    
+                    return daysUntilExpiry <= 7 && daysUntilExpiry > 0;
+                });
+                
+            default:
+                return members;
+        }
+    }
+    
+    // دالة عرض الأعضاء في الجدول
+    function renderMembersTable() {
+        const tbody = document.getElementById('membersTableBody');
+        if (!tbody) return;
+        
+        // حساب البداية والنهاية للصفحة الحالية
+        const startIndex = (currentPage - 1) * rowsPerPage;
+        const endIndex = startIndex + rowsPerPage;
+        const pageMembers = filteredMembers.slice(startIndex, endIndex);
+        
+        if (pageMembers.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="10" class="no-data">
+                        <i class="fas fa-users-slash"></i>
+                        <p>لا توجد أعضاء لعرضهم</p>
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+        
+        let tableHtml = '';
+        
+        pageMembers.forEach(member => {
+            // حساب حالة الاشتراك
+            const statusInfo = getMemberStatus(member);
+            
+            tableHtml += `
+                <tr data-id="${member.id}">
+                    <td>
+                        <input type="checkbox" class="member-checkbox" data-id="${member.id}">
+                    </td>
+                    <td>
+                        <span class="member-code">${member.id}</span>
+                    </td>
+                    <td>
+                        <div class="member-name">
+                            <div class="avatar">
+                                ${member.gender === 'male' ? '👨' : '👩'}
+                            </div>
+                            <div>
+                                <strong>${member.name}</strong>
+                                <small>${member.phone}</small>
+                            </div>
+                        </div>
+                    </td>
+                    <td>${member.age}</td>
+                    <td>
+                        <span class="gender-badge ${member.gender}">
+                            ${member.gender === 'male' ? 'ذكر' : 'أنثى'}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="package-name">${member.package}</span>
+                        <small>${member.price} ج.م</small>
+                    </td>
+                    <td>${formatDate(member.startDate)}</td>
+                    <td>
+                        <span class="end-date ${statusInfo.class}">
+                            ${formatDate(member.endDate)}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="status-badge ${statusInfo.class}">
+                            ${statusInfo.text}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn-view" data-id="${member.id}" title="عرض التفاصيل">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn-edit" data-id="${member.id}" title="تعديل">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn-renew" data-id="${member.id}" title="تجديد">
+                                <i class="fas fa-redo"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `;
+        });
+        
+        tbody.innerHTML = tableHtml;
+        
+        // إضافة الأحداث للأزرار
+        attachRowEvents();
+    }
+    
+    // دالة الحصول على حالة العضو
+    function getMemberStatus(member) {
+        if (member.status !== 'active') {
+            return {
+                class: 'expired',
+                text: 'منتهي'
+            };
+        }
+        
+        const endDate = new Date(member.endDate);
+        const today = new Date();
+        const daysUntilExpiry = Math.ceil((endDate - today) / (1000 * 60 * 60 * 24));
+        
+        if (daysUntilExpiry <= 0) {
+            return {
+                class: 'expired',
+                text: 'منتهي'
+            };
+        } else if (daysUntilExpiry <= 7) {
+            return {
+                class: 'warning',
+                text: `ينتهي خلال ${daysUntilExpiry} أيام`
+            };
+        } else {
+            return {
+                class: 'active',
+                text: 'نشط'
+            };
+        }
+    }
+    
+    // دالة تنسيق التاريخ
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('ar-EG', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    }
+    
+    // دالة إضافة الأحداث لصفوف الجدول
+    function attachRowEvents() {
+        // أزرار العرض
+        document.querySelectorAll('.btn-view').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const memberId = this.getAttribute('data-id');
+                showMemberDetails(memberId);
+            });
+        });
+        
+        // أزرار التعديل
+        document.querySelectorAll('.btn-edit').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const memberId = this.getAttribute('data-id');
+                editMember(memberId);
+            });
+        });
+        
+        // أزرار التجديد
+        document.querySelectorAll('.btn-renew').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const memberId = this.getAttribute('data-id');
+                const member = subscriptions.find(m => m.id === memberId);
+                if (member) openRenewModal(member);
+            });
+        });
+        
+        // التحديد الفردي
+        document.querySelectorAll('.member-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', updateSelectAll);
+        });
+    }
+    
+    // دالة تهيئة الأحداث
+    function initEvents() {
+        // زر إضافة عضو جديد
+        const addMemberBtn = document.getElementById('addMemberBtn');
+        if (addMemberBtn) {
+            addMemberBtn.addEventListener('click', () => {
+                prepareAddMemberForm();
+                openModal('addMemberModal');
+            });
+        }
+        
+        // زر تجديد اشتراك
+        const renewBtn = document.getElementById('renewMembershipBtn');
+        if (renewBtn) {
+            renewBtn.addEventListener('click', () => {
+                const selected = getSelectedMembers();
+                if (selected.length === 0) {
+                    showAlert('تحذير', 'يرجى اختيار عضو واحد على الأقل', false);
+                    return;
+                }
+                if (selected.length > 1) {
+                    showAlert('تحذير', 'يمكنك تجديد عضو واحد فقط في كل مرة', false);
+                    return;
+                }
+                openRenewModal(selected[0]);
+            });
+        }
+        
+        // زر إلغاء اشتراك
+        const cancelBtn = document.getElementById('cancelMembershipBtn');
+        if (cancelBtn) {
+            cancelBtn.addEventListener('click', () => {
+                const selected = getSelectedMembers();
+                if (selected.length === 0) {
+                    showAlert('تحذير', 'يرجى اختيار عضو واحد على الأقل', false);
+                    return;
+                }
+                if (selected.length > 1) {
+                    showAlert('تحذير', 'يمكنك إلغاء عضو واحد فقط في كل مرة', false);
+                    return;
+                }
+                cancelMembership(selected[0]);
+            });
+        }
+        
+        // فلترة حسب الحالة
+        const filterStatus = document.getElementById('filterStatus');
+        if (filterStatus) {
+            filterStatus.addEventListener('change', () => {
+                currentPage = 1;
+                loadMembers();
+            });
+        }
+        
+        // عدد الصفوف في الصفحة
+        const rowsSelect = document.getElementById('rowsPerPage');
+        if (rowsSelect) {
+            rowsSelect.addEventListener('change', function() {
+                rowsPerPage = parseInt(this.value);
+                currentPage = 1;
+                loadMembers();
+            });
+        }
+        
+        // التحديد الكلي
+        const selectAll = document.getElementById('selectAll');
+        if (selectAll) {
+            selectAll.addEventListener('change', function() {
+                document.querySelectorAll('.member-checkbox').forEach(cb => {
+                    cb.checked = this.checked;
+                });
+                updateSelectionCount();
+            });
+        }
+        
+        // الترحيم
+        const prevBtn = document.getElementById('prevPageBtn');
+        const nextBtn = document.getElementById('nextPageBtn');
+        
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    loadMembers();
+                }
+            });
+        }
+        
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                const totalPages = Math.ceil(filteredMembers.length / rowsPerPage);
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    loadMembers();
+                }
+            });
+        }
+        
+        // تصدير البيانات
+        const exportBtn = document.getElementById('exportBtn');
+        if (exportBtn) {
+            exportBtn.addEventListener('click', exportMembersData);
+        }
+        
+        // نموذج إضافة عضو
+        const addMemberForm = document.getElementById('addMemberForm');
+        if (addMemberForm) {
+            addMemberForm.addEventListener('submit', handleAddMember);
+        }
+        
+        // نموذج تجديد اشتراك
+        const renewForm = document.getElementById('renewMembershipForm');
+        if (renewForm) {
+            renewForm.addEventListener('submit', handleRenewMembership);
+        }
+    }
+    
+    // دالة تحضير نموذج إضافة عضو
+    function prepareAddMemberForm() {
+        // تعبئة خيارات الباقات
+        const packageSelect = document.getElementById('memberPackage');
+        if (packageSelect) {
+            packageSelect.innerHTML = '<option value="">اختر الباقة</option>';
+            packages.forEach(pkg => {
+                const option = document.createElement('option');
+                option.value = pkg.name;
+                option.textContent = `${pkg.name} - ${pkg.price} ج.م`;
+                packageSelect.appendChild(option);
+            });
+        }
+        
+        // تعيين تاريخ اليوم
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('memberStartDate').value = today;
+    }
+    
+    // دالة معالجة إضافة عضو
+    async function handleAddMember(e) {
+        e.preventDefault();
+        
+        const memberData = {
+            name: document.getElementById('memberName').value.trim(),
+            age: parseInt(document.getElementById('memberAge').value),
+            gender: document.getElementById('memberGender').value,
+            phone: document.getElementById('memberPhone').value.trim(),
+            package: document.getElementById('memberPackage').value,
+            paymentMethod: document.getElementById('memberPayment').value,
+            startDate: document.getElementById('memberStartDate').value,
+            duration: parseInt(document.getElementById('memberDuration').value)
+        };
+        
+        // التحقق من البيانات
+        if (!validateMemberData(memberData)) return;
+        
+        // توليد كود العضو
+        const memberId = generateMemberId();
+        
+        // الحصول على سعر الباقة
+        const packageInfo = packages.find(p => p.name === memberData.package);
+        const price = packageInfo ? packageInfo.price : 300;
+        
+        // حساب تاريخ الانتهاء
+        const endDate = new Date(memberData.startDate);
+        endDate.setMonth(endDate.getMonth() + memberData.duration);
+        
+        // الحصول على المستخدم الحالي
+        const currentUser = getCurrentUser();
+        
+        // إنشاء العضو الجديد
+        const newMember = {
+            id: memberId,
+            name: memberData.name,
+            age: memberData.age,
+            gender: memberData.gender,
+            phone: memberData.phone,
+            package: memberData.package,
+            startDate: memberData.startDate,
+            endDate: endDate.toISOString().split('T')[0],
+            paymentMethod: memberData.paymentMethod,
+            price: price,
+            addedBy: currentUser.username,
+            status: 'active'
+        };
+        
+        // إضافة العضو
+        subscriptions.push(newMember);
+        
+        // إضافة نشاط
+        const newActivity = {
+            id: activities.length + 1,
+            type: 'اشتراك جديد',
+            user: memberData.name,
+            amount: price,
+            date: new Date().toISOString().split('T')[0],
+            time: new Date().toLocaleTimeString('ar-EG', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            }),
+            details: `تم إضافة اشتراك جديد - ${memberData.package}`
+        };
+        
+        activities.unshift(newActivity);
+        
+        // حفظ البيانات
+        saveData();
+        
+        // إغلاق النموذج
+        closeModal('addMemberModal');
+        
+        // تحديث العرض
+        loadMembers();
+        updateCounters();
+        
+        // عرض رسالة النجاح
+        showAlert('تمت الإضافة', `تم إضافة العضو ${memberData.name} بنجاح. الكود: ${memberId}`, true);
+    }
+    
+    // دالة التحقق من بيانات العضو
+    function validateMemberData(data) {
+        if (!data.name || data.name.length < 2) {
+            showAlert('خطأ', 'يرجى إدخال اسم صحيح', false);
+            return false;
+        }
+        
+        if (data.age < 16 || data.age > 70) {
+            showAlert('خطأ', 'يجب أن يكون العمر بين 16 و 70 سنة', false);
+            return false;
+        }
+        
+        if (!data.phone || data.phone.length < 10) {
+            showAlert('خطأ', 'يرجى إدخال رقم هاتف صحيح', false);
+            return false;
+        }
+        
+        if (!data.package) {
+            showAlert('خطأ', 'يرجى اختيار باقة', false);
+            return false;
+        }
+        
+        if (!data.paymentMethod) {
+            showAlert('خطأ', 'يرجى اختيار وسيلة دفع', false);
+            return false;
+        }
+        
+        if (!data.startDate) {
+            showAlert('خطأ', 'يرجى تحديد تاريخ البدء', false);
+            return false;
+        }
+        
+        return true;
+    }
+    
+    // دالة عرض تفاصيل العضو
+    function showMemberDetails(memberId) {
+        const member = subscriptions.find(m => m.id === memberId);
+        if (!member) return;
+        
+        const content = document.getElementById('memberDetailsContent');
+        if (!content) return;
+        
+        // حساب الأيام المتبقية
+        const endDate = new Date(member.endDate);
+        const today = new Date();
+        const daysRemaining = Math.ceil((endDate - today) / (1000 * 60 * 60 * 24));
+        
+        // إنشاء محتوى التفاصيل
+        content.innerHTML = `
+            <div class="member-header">
+                <div class="member-avatar-large">
+                    ${member.gender === 'male' ? '👨' : '👩'}
+                </div>
+                <div class="member-info">
+                    <h4>${member.name}</h4>
+                    <p>كود العضو: <strong>${member.id}</strong></p>
+                    <span class="status-badge ${member.status === 'active' ? 'active' : 'expired'}">
+                        ${member.status === 'active' ? 'نشط' : 'منتهي'}
+                    </span>
+                </div>
+            </div>
+            
+            <div class="member-details-grid">
+                <div class="detail-item">
+                    <span class="detail-label">العمر:</span>
+                    <span class="detail-value">${member.age} سنة</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">الجنس:</span>
+                    <span class="detail-value">${member.gender === 'male' ? 'ذكر' : 'أنثى'}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">الهاتف:</span>
+                    <span class="detail-value">${member.phone}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">الباقة:</span>
+                    <span class="detail-value">${member.package}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">السعر:</span>
+                    <span class="detail-value">${member.price} ج.م</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">تاريخ البدء:</span>
+                    <span class="detail-value">${formatDate(member.startDate)}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">تاريخ الانتهاء:</span>
+                    <span class="detail-value">${formatDate(member.endDate)}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">الأيام المتبقية:</span>
+                    <span class="detail-value ${daysRemaining <= 7 ? 'warning' : 'success'}">
+                        ${daysRemaining > 0 ? daysRemaining + ' يوم' : 'انتهى'}
+                    </span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">وسيلة الدفع:</span>
+                    <span class="detail-value">${member.paymentMethod}</span>
+                </div>
+            </div>
+        `;
+        
+        // إضافة أحداث للأزرار
+        const editBtn = document.getElementById('editMemberBtn');
+        const renewBtn = document.getElementById('renewMemberBtn');
+        const cancelBtn = document.getElementById('cancelMemberBtn');
+        
+        if (editBtn) editBtn.onclick = () => editMember(memberId);
+        if (renewBtn) renewBtn.onclick = () => openRenewModal(member);
+        if (cancelBtn) cancelBtn.onclick = () => cancelMembership(member);
+        
+        // فتح النموذج
+        openModal('memberDetailsModal');
+    }
+    
+    // دالة فتح نموذج تجديد الاشتراك
+    function openRenewModal(member) {
+        if (!member) return;
+        
+        // تعبئة البيانات
+        document.getElementById('renewMemberName').value = member.name;
+        document.getElementById('renewMemberCode').value = member.id;
+        document.getElementById('renewPackage').value = member.package;
+        document.getElementById('renewAmount').value = member.price;
+        
+        // تعيين تاريخ اليوم
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('renewStartDate').value = today;
+        
+        // تعبئة خيارات الباقات
+        const packageSelect = document.getElementById('renewPackage');
+        if (packageSelect) {
+            packageSelect.innerHTML = '<option value="">اختر الباقة</option>';
+            packages.forEach(pkg => {
+                const option = document.createElement('option');
+                option.value = pkg.name;
+                option.textContent = `${pkg.name} - ${pkg.price} ج.م`;
+                packageSelect.appendChild(option);
+            });
+            packageSelect.value = member.package;
+        }
+        
+        // فتح النموذج
+        openModal('renewMembershipModal');
+    }
+    
+    // دالة معالجة تجديد الاشتراك
+    async function handleRenewMembership(e) {
+        e.preventDefault();
+        
+        const memberCode = document.getElementById('renewMemberCode').value;
+        const member = subscriptions.find(m => m.id === memberCode);
+        if (!member) return;
+        
+        const renewData = {
+            package: document.getElementById('renewPackage').value,
+            duration: parseInt(document.getElementById('renewDuration').value),
+            paymentMethod: document.getElementById('renewPayment').value,
+            startDate: document.getElementById('renewStartDate').value,
+            amount: parseInt(document.getElementById('renewAmount').value)
+        };
+        
+        // تحديث بيانات العضو
+        member.package = renewData.package;
+        member.startDate = renewData.startDate;
+        
+        // حساب تاريخ الانتهاء الجديد
+        const endDate = new Date(renewData.startDate);
+        endDate.setMonth(endDate.getMonth() + renewData.duration);
+        member.endDate = endDate.toISOString().split('T')[0];
+        
+        member.paymentMethod = renewData.paymentMethod;
+        member.price = renewData.amount;
+        member.status = 'active';
+        
+        // إضافة نشاط التجديد
+        const newActivity = {
+            id: activities.length + 1,
+            type: 'تجديد اشتراك',
+            user: member.name,
+            amount: renewData.amount,
+            date: new Date().toISOString().split('T')[0],
+            time: new Date().toLocaleTimeString('ar-EG', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            }),
+            details: `تم تجديد الاشتراك - ${renewData.package}`
+        };
+        
+        activities.unshift(newActivity);
+        
+        // حفظ البيانات
+        saveData();
+        
+        // إغلاق النموذج
+        closeModal('renewMembershipModal');
+        
+        // تحديث العرض
+        loadMembers();
+        
+        // عرض رسالة النجاح
+        showAlert('تم التجديد', `تم تجديد اشتراك ${member.name} بنجاح`, true);
+    }
+    
+    // دالة إلغاء اشتراك
+    async function cancelMembership(member) {
+        const confirmed = await showAlert(
+            'تأكيد الإلغاء',
+            `هل أنت متأكد من إلغاء اشتراك ${member.name}؟ هذا الإجراء لا يمكن التراجع عنه.`,
+            false
+        );
+        
+        if (!confirmed) return;
+        
+        // تحديث حالة العضو
+        member.status = 'cancelled';
+        
+        // إضافة نشاط الإلغاء
+        const newActivity = {
+            id: activities.length + 1,
+            type: 'إلغاء اشتراك',
+            user: member.name,
+            amount: 0,
+            date: new Date().toISOString().split('T')[0],
+            time: new Date().toLocaleTimeString('ar-EG', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            }),
+            details: 'تم إلغاء الاشتراك بناءً على طلب الإدارة'
+        };
+        
+        activities.unshift(newActivity);
+        
+        // حفظ البيانات
+        saveData();
+        
+        // تحديث العرض
+        loadMembers();
+        
+        // عرض رسالة النجاح
+        showAlert('تم الإلغاء', `تم إلغاء اشتراك ${member.name} بنجاح`, true);
+    }
+    
+    // دالة تعديل بيانات العضو
+    function editMember(memberId) {
+        // في الإصدار الحالي، نفتح نموذج التفاصيل ثم الزر
+        showMemberDetails(memberId);
+        
+        // يمكن إضافة نموذج تعديل منفصل في المستقبل
+        showAlert('تعديل البيانات', 'خاصية تعديل البيانات قيد التطوير', false);
+    }
+    
+    // دالة الحصول على الأعضاء المحددين
+    function getSelectedMembers() {
+        const selectedCheckboxes = document.querySelectorAll('.member-checkbox:checked');
+        const selectedMembers = [];
+        
+        selectedCheckboxes.forEach(checkbox => {
+            const memberId = checkbox.getAttribute('data-id');
+            const member = subscriptions.find(m => m.id === memberId);
+            if (member) selectedMembers.push(member);
+        });
+        
+        return selectedMembers;
+    }
+    
+    // دالة تحديث التحديد الكلي
+    function updateSelectAll() {
+        const selectAll = document.getElementById('selectAll');
+        if (!selectAll) return;
+        
+        const checkboxes = document.querySelectorAll('.member-checkbox');
+        const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+        
+        selectAll.checked = allChecked;
+        updateSelectionCount();
+    }
+    
+    // دالة تحديث عداد التحديد
+    function updateSelectionCount() {
+        const selectedCount = document.querySelectorAll('.member-checkbox:checked').length;
+        // يمكن عرض العدد في مكان مناسب
+    }
+    
+    // دالة تحديث الترحيم
+    function updatePagination() {
+        const totalPages = Math.ceil(filteredMembers.length / rowsPerPage);
+        
+        document.querySelector('.current-page').textContent = currentPage;
+        document.querySelector('.total-pages').textContent = totalPages;
+        
+        const prevBtn = document.getElementById('prevPageBtn');
+        const nextBtn = document.getElementById('nextPageBtn');
+        
+        if (prevBtn) prevBtn.disabled = currentPage === 1;
+        if (nextBtn) nextBtn.disabled = currentPage === totalPages;
+    }
+    
+    // دالة تحديث العدادات
+    function updateCounters() {
+        const membersCount = document.getElementById('membersCount');
+        if (membersCount) {
+            membersCount.textContent = `${filteredMembers.length} عضو`;
+        }
+    }
+    
+    // دالة تصدير بيانات الأعضاء
+    function exportMembersData() {
+        const dataStr = JSON.stringify(filteredMembers, null, 2);
+        const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+        
+        const exportFileName = `أعضاء_الجيم_${new Date().toISOString().split('T')[0]}.json`;
+        
+        const linkElement = document.createElement('a');
+        linkElement.setAttribute('href', dataUri);
+        linkElement.setAttribute('download', exportFileName);
+        document.body.appendChild(linkElement);
+        linkElement.click();
+        document.body.removeChild(linkElement);
+        
+        showAlert('تم التصدير', 'تم تصدير بيانات الأعضاء بنجاح', true);
+    }
+    
+    // تشغيل تهيئة الصفحة عند التحميل
+    document.addEventListener('DOMContentLoaded', () => {
+        initMembersPage();
+    });
+    </script>
+</body>
+</html>

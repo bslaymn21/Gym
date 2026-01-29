@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - نظام إدارة الجيم</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- القائمة الجانبية -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <h1>GYM <span>MANAGER</span></h1>
+                </div>
+                <button class="sidebar-close" id="sidebarClose">
+                   <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            
+            <div class="sidebar-profile">
+                <div class="profile-img">
+                    <img src="https://ui-avatars.com/api/?name=Admin&background=0f4c75&color=fff" alt="صورة المستخدم">
+                </div>
+                <div class="profile-info">
+                    <h3 id="userName">المسؤول الرئيسي</h3>
+                    <p id="userRole">مسؤول</p>
+                    <span class="status online" id="userStatus">متصل</span>
+                </div>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <ul>
+                    <li class="active">
+                        <a href="dashboard.html">
+                            <i class="fas fa-home"></i>
+                            <span>لوحة التحكم</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="members.html">
+                            <i class="fas fa-users"></i>
+                            <span>إدارة الأعضاء</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="renew.html">
+                            <i class="fas fa-redo"></i>
+                            <span>تجديد الاشتراكات</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="calendar.html">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>التقويم والاشتراكات</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="subscriptions.html">
+                            <i class="fas fa-credit-card"></i>
+                            <span>الاشتراكات</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="users.html">
+                             <i class="fas fa-users-cog"></i>
+                                     <span>إدارة المستخدمين</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="settings.html">
+                            <i class="fas fa-cog"></i>
+                            <span>الإعدادات</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button class="btn-logout" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>تسجيل الخروج</span>
+                </button>
+            </div>
+        </aside>
+        
+        <!-- طبقة التعتيم للقائمة الجانبية -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        
+        <!-- المحتوى الرئيسي -->
+        <main class="main-content">
+            <!-- شريط الرأس العلوي -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="sidebar-toggle" id="sidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="ابحث عن عضو أو كود اشتراك...">
+                        <button class="clear-search" id="clearSearchBtn">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <button class="search-btn" id="searchBtn">بحث</button>
+                    </div>
+                    <div class="search-results" id="searchResults"></div>
+                </div>
+                
+                <div class="header-right">
+                    <button class="notifications-btn" id="notificationsBtn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-count" id="notificationCount">0</span>
+                    </button>
+                    
+                    <!-- لوحة الإشعارات -->
+                    <div class="notifications-panel" id="notificationsPanel">
+                        <div class="notifications-header">
+                            <h3>الإشعارات</h3>
+                            <button class="mark-all-read">تعيين الكل كمقروء</button>
+                        </div>
+                        <div class="notifications-list" id="notificationsList">
+                            <!-- سيتم ملؤه بواسطة JavaScript -->
+                        </div>
+                        <div class="notifications-footer">
+                            <a href="notifications.html" class="view-all">عرض جميع الإشعارات</a>
+                        </div>
+                    </div>
+                    
+                    <div class="user-menu">
+                        <div class="user-info">
+                            <span id="headerUserName">المسؤول الرئيسي</span>
+                            <small>مسؤول</small>
+                        </div>
+                        <div class="user-avatar">
+                            <img src="https://ui-avatars.com/api/?name=Admin&background=0f4c75&color=fff" alt="صورة المستخدم">
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- محتوى لوحة التحكم -->
+            <div class="dashboard-content">
+                <div class="page-header">
+                    <h2>لوحة التحكم</h2>
+                    <p>مرحباً بعودتك! إليك ملخص أداء الجيم</p>
+                </div>
+                
+                <!-- إحصائيات سريعة -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalMembers">0</h3>
+                            <p>إجمالي المشتركين</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-male"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="maleMembers">0</h3>
+                            <p>المشتركون الرجال</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-female"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="femaleMembers">0</h3>
+                            <p>المشتركات النساء</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="monthlyIncome">0 ج.م</h3>
+                            <p>إيرادات الشهر الحالي</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- النشاط الأخير -->
+                <div class="recent-activities">
+                    <div class="section-header">
+                        <h3>النشاط الأخير</h3>
+                        <a href="#" class="view-all">عرض الكل</a>
+                    </div>
+                    <div class="activities-list" id="recentActivities">
+                        <!-- سيتم ملؤه بواسطة JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- إجراءات سريعة -->
+                <div class="quick-actions">
+                    <div class="section-header">
+                        <h3>إجراءات سريعة</h3>
+                    </div>
+                    <div class="actions-grid">
+                        <button class="action-btn" id="addMemberBtn">
+                            <i class="fas fa-user-plus"></i>
+                            <span>إضافة عضو جديد</span>
+                        </button>
+                        
+                        <a href="renew.html">
+                            <button class="action-btn">
+                                <i class="fas fa-redo"></i>
+                                <span>تجديد اشتراك</span>
+                            </button>
+                        </a>
+                        
+                        <button class="action-btn" id="addSubscriptionBtn">
+                            <i class="fas fa-credit-card"></i>
+                            <span>إضافة اشتراك</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- نموذج إضافة عضو جديد -->
+    <div id="addMemberModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>إضافة عضو جديد</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="addMemberForm">
+                    <div class="form-group">
+                        <label for="memberName">اسم العضو *</label>
+                        <input type="text" id="memberName" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="memberAge">العمر *</label>
+                            <input type="number" id="memberAge" min="16" max="70" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="memberGender">الجنس *</label>
+                            <select id="memberGender" required>
+                                <option value="">اختر الجنس</option>
+                                <option value="male">ذكر</option>
+                                <option value="female">أنثى</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="memberPhone">رقم الهاتف *</label>
+                        <input type="tel" id="memberPhone" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="memberPackage">الباقة *</label>
+                        <select id="memberPackage" required>
+                            <option value="">اختر الباقة</option>
+                            <!-- سيتم ملؤه بواسطة JavaScript -->
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="memberStartDate">تاريخ البدء *</label>
+                        <input type="date" id="memberStartDate" required>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">إضافة العضو</button>
+                        <button type="button" class="btn-secondary close-modal">إلغاء</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- نموذج إضافة اشتراك -->
+    <div id="addSubscriptionModal" class="modal">
+        <!-- محتوى مشابه مع تعديلات للاشتراكات -->
+    </div>
+    
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+    <script>
+    /**
+     * سكريبت خاص بصفحة لوحة التحكم
+     */
+    
+    // تهيئة صفحة لوحة التحكم
+    function initDashboard() {
+        // تحديث الإحصائيات
+        updateStatistics();
+        
+        // تحديث النشاطات الأخيرة
+        updateRecentActivities();
+        
+        // إضافة حدث لزر إضافة عضو جديد
+        const addMemberBtn = document.getElementById('addMemberBtn');
+        const addMemberModal = document.getElementById('addMemberModal');
+        const addMemberForm = document.getElementById('addMemberForm');
+        
+        if (addMemberBtn && addMemberModal) {
+            addMemberBtn.addEventListener('click', () => {
+                // تعبئة خيارات الباقات
+                fillPackageOptions('memberPackage');
+                
+                // تعيين تاريخ اليوم كافتراضي
+                document.getElementById('memberStartDate').valueAsDate = new Date();
+                
+                // فتح النموذج
+                openModal('addMemberModal');
+            });
+        }
+        
+        // إرسال نموذج إضافة عضو
+        if (addMemberForm) {
+            addMemberForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // جمع البيانات
+                const memberData = {
+                    name: document.getElementById('memberName').value,
+                    age: parseInt(document.getElementById('memberAge').value),
+                    gender: document.getElementById('memberGender').value,
+                    phone: document.getElementById('memberPhone').value,
+                    package: document.getElementById('memberPackage').value,
+                    startDate: document.getElementById('memberStartDate').value
+                };
+                
+                // التحقق من البيانات
+                if (!validateMemberData(memberData)) return;
+                
+                // إضافة العضو
+                const success = await addNewMember(memberData);
+                
+                if (success) {
+                    // تحديث الإحصائيات
+                    updateStatistics();
+                    updateRecentActivities();
+                    
+                    // إغلاق النموذج وإعادة تعيينه
+                    closeModal('addMemberModal');
+                    addMemberForm.reset();
+                    
+                    // عرض رسالة نجاح
+                    showAlert('تمت الإضافة بنجاح', 'تم إضافة العضو الجديد بنجاح', true);
+                }
+            });
+        }
+        
+        // زر إضافة اشتراك
+        const addSubscriptionBtn = document.getElementById('addSubscriptionBtn');
+        if (addSubscriptionBtn) {
+            addSubscriptionBtn.addEventListener('click', () => {
+                openModal('addSubscriptionModal');
+            });
+        }
+    }
+    
+    // دالة تحديث الإحصائيات
+    function updateStatistics() {
+        // إجمالي الأعضاء
+        const totalMembers = subscriptions.length;
+        document.getElementById('totalMembers').textContent = totalMembers;
+        
+        // الرجال
+        const maleMembers = subscriptions.filter(m => m.gender === 'male').length;
+        document.getElementById('maleMembers').textContent = maleMembers;
+        
+        // النساء
+        const femaleMembers = subscriptions.filter(m => m.gender === 'female').length;
+        document.getElementById('femaleMembers').textContent = femaleMembers;
+        
+        // الإيرادات الشهرية
+        const currentMonth = new Date().getMonth() + 1;
+        const monthlyIncome = activities
+            .filter(a => {
+                const activityDate = new Date(a.date);
+                return activityDate.getMonth() + 1 === currentMonth;
+            })
+            .reduce((sum, activity) => sum + (activity.amount || 0), 0);
+        
+        document.getElementById('monthlyIncome').textContent = `${monthlyIncome} ج.م`;
+    }
+    
+    // دالة تحديث النشاطات الأخيرة
+    function updateRecentActivities() {
+        const recentActivities = document.getElementById('recentActivities');
+        if (!recentActivities) return;
+        
+        // أخذ آخر 5 نشاطات
+        const latestActivities = [...activities]
+            .sort((a, b) => new Date(b.date + ' ' + b.time) - new Date(a.date + ' ' + a.time))
+            .slice(0, 5);
+        
+        if (latestActivities.length === 0) {
+            recentActivities.innerHTML = `
+                <div class="no-activities">
+                    <i class="fas fa-calendar-times"></i>
+                    <p>لا توجد نشاطات حديثة</p>
+                </div>
+            `;
+            return;
+        }
+        
+        let activitiesHtml = '';
+        latestActivities.forEach(activity => {
+            activitiesHtml += `
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-${getActivityIcon(activity.type)}"></i>
+                    </div>
+                    <div class="activity-details">
+                        <h4>${activity.type}</h4>
+                        <p>${activity.details}</p>
+                        <span class="activity-time">${activity.date} - ${activity.time}</span>
+                    </div>
+                    ${activity.amount > 0 ? 
+                        `<span class="activity-amount">${activity.amount} ج.م</span>` : ''}
+                </div>
+            `;
+        });
+        
+        recentActivities.innerHTML = activitiesHtml;
+    }
+    
+    // دالة الحصول على أيقونة النشاط
+    function getActivityIcon(type) {
+        switch(type) {
+            case 'اشتراك جديد': return 'user-plus';
+            case 'تجديد اشتراك': return 'redo';
+            case 'إلغاء اشتراك': return 'user-times';
+            default: return 'bell';
+        }
+    }
+    
+    // دالة تعبئة خيارات الباقات
+    function fillPackageOptions(selectId) {
+        const select = document.getElementById(selectId);
+        if (!select) return;
+        
+        // مسح الخيارات الحالية (باستثناء الخيار الأول)
+        while (select.options.length > 1) {
+            select.remove(1);
+        }
+        
+        // إضافة الباقات
+        packages.forEach(pkg => {
+            const option = document.createElement('option');
+            option.value = pkg.name;
+            option.textContent = `${pkg.name} - ${pkg.price} ج.م`;
+            select.appendChild(option);
+        });
+    }
+    
+    // دالة التحقق من بيانات العضو
+    function validateMemberData(data) {
+        if (!data.name || data.name.trim().length < 2) {
+            showAlert('خطأ في البيانات', 'يرجى إدخال اسم صحيح', false);
+            return false;
+        }
+        
+        if (data.age < 16 || data.age > 70) {
+            showAlert('خطأ في البيانات', 'يجب أن يكون العمر بين 16 و 70 سنة', false);
+            return false;
+        }
+        
+        if (!data.phone || data.phone.length < 10) {
+            showAlert('خطأ في البيانات', 'يرجى إدخال رقم هاتف صحيح', false);
+            return false;
+        }
+        
+        if (!data.package) {
+            showAlert('خطأ في البيانات', 'يرجى اختيار باقة', false);
+            return false;
+        }
+        
+        if (!data.startDate) {
+            showAlert('خطأ في البيانات', 'يرجى تحديد تاريخ البدء', false);
+            return false;
+        }
+        
+        return true;
+    }
+    
+    // دالة إضافة عضو جديد
+    async function addNewMember(data) {
+        try {
+            // توليد كود جديد
+            const memberId = generateMemberId();
+            
+            // الحصول على المستخدم الحالي
+            const currentUser = getCurrentUser();
+            
+            // الحصول على سعر الباقة
+            const packageInfo = packages.find(p => p.name === data.package);
+            const price = packageInfo ? packageInfo.price : 300;
+            
+            // حساب تاريخ الانتهاء (شهر واحد)
+            const endDate = new Date(data.startDate);
+            endDate.setMonth(endDate.getMonth() + 1);
+            
+            // إنشاء العضو الجديد
+            const newMember = {
+                id: memberId,
+                name: data.name,
+                age: data.age,
+                gender: data.gender,
+                phone: data.phone,
+                package: data.package,
+                startDate: data.startDate,
+                endDate: endDate.toISOString().split('T')[0],
+                paymentMethod: 'كاش',
+                price: price,
+                addedBy: currentUser.username,
+                status: 'active'
+            };
+            
+            // إضافة إلى المصفوفة
+            subscriptions.push(newMember);
+            
+            // إضافة نشاط
+            const newActivity = {
+                id: activities.length + 1,
+                type: 'اشتراك جديد',
+                user: data.name,
+                amount: price,
+                date: new Date().toISOString().split('T')[0],
+                time: new Date().toLocaleTimeString('ar-EG', { 
+                    hour: '2-digit', 
+                    minute: '2-digit' 
+                }),
+                details: `تم إضافة اشتراك جديد - ${data.package}`
+            };
+            
+            activities.unshift(newActivity);
+            
+            // حفظ البيانات
+            saveData();
+            
+            // تحديث الإشعارات
+            updateNotificationCount();
+            
+            return true;
+        } catch (error) {
+            console.error('خطأ في إضافة العضو:', error);
+            showAlert('خطأ', 'حدث خطأ أثناء إضافة العضو', false);
+            return false;
+        }
+    }
+    
+    // تشغيل تهيئة لوحة التحكم عند تحميل الصفحة
+    document.addEventListener('DOMContentLoaded', () => {
+        initDashboard();
+    });
+    </script>
+</body>
+</html>

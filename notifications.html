@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الإشعارات - نظام إدارة الجيم</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- القائمة الجانبية -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <h1>GYM <span>MANAGER</span></h1>
+                </div>
+                <button class="sidebar-close" id="sidebarClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="sidebar-profile">
+                <div class="profile-img">
+                    <img src="https://ui-avatars.com/api/?name=Admin&background=0f4c75&color=fff" alt="صورة المستخدم">
+                </div>
+                <div class="profile-info">
+                    <h3 id="userName">المسؤول الرئيسي</h3>
+                    <p id="userRole">مسؤول</p>
+                    <span class="status online" id="userStatus">متصل</span>
+                </div>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <ul>
+                    <li>
+                        <a href="dashboard.html">
+                            <i class="fas fa-home"></i>
+                            <span>لوحة التحكم</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="members.html">
+                            <i class="fas fa-users"></i>
+                            <span>إدارة الأعضاء</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="renew.html">
+                            <i class="fas fa-redo"></i>
+                            <span>تجديد الاشتراكات</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="calendar.html">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>التقويم والاشتراكات</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="subscriptions.html">
+                            <i class="fas fa-credit-card"></i>
+                            <span>الاشتراكات</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="notifications.html">
+                            <i class="fas fa-bell"></i>
+                            <span>الإشعارات</span>
+                            <span class="notification-badge" id="sidebarNotificationCount">3</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="settings.html">
+                            <i class="fas fa-cog"></i>
+                            <span>الإعدادات</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button class="btn-logout" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>تسجيل الخروج</span>
+                </button>
+            </div>
+        </aside>
+        
+        <!-- طبقة التعتيم للقائمة الجانبية -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        
+        <!-- المحتوى الرئيسي -->
+        <main class="main-content">
+            <!-- شريط الرأس العلوي -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="sidebar-toggle" id="sidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                 
+                    
+               
+                </div>
+            </header>
+            
+            <!-- محتوى صفحة الإشعارات -->
+            <div class="dashboard-content">
+                <!-- إحصائيات سريعة -->
+                
+                
+                
+                <!-- قائمة الإشعارات -->
+                <div class="notifications-list-container">
+                    <div class="table-header">
+                        <h3>قائمة الإشعارات</h3>
+                        <div class="table-actions">
+                            <span id="notificationsCount">12 إشعار</span>
+                            <div class="selection-buttons">
+                                <button class="btn-secondary" id="selectAllNotificationsBtn">
+                                    <i class="fas fa-check-square"></i> تحديد الكل
+                                </button>
+                                <button class="btn-secondary" id="deselectAllNotificationsBtn">
+                                    <i class="far fa-square"></i> إلغاء الكل
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="notifications-content" id="notificationsContent">
+                        <!-- ستم ملؤها بواسطة JavaScript -->
+                    </div>
+                    
+                    <div class="table-footer">
+                        <div class="pagination">
+                            <button class="pagination-btn" id="prevNotificationsBtn" disabled>
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                            <span class="page-numbers">
+                                <span class="current-page">1</span> من <span class="total-pages">2</span>
+                            </span>
+                            <button class="pagination-btn" id="nextNotificationsBtn">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="rows-per-page">
+                            <span>عرض</span>
+                            <select id="notificationsPerPage">
+                                <option value="10">10</option>
+                                <option value="25" selected>25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                            <span>إشعار في كل صفحة</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- الإشعارات المهمة -->
+                <div class="important-notifications">
+                    <div class="section-header">
+                        <h3>
+                            <i class="fas fa-star" style="color: #f39c12;"></i>
+                            الإشعارات المهمة
+                        </h3>
+                        <button class="btn-secondary" id="clearImportantBtn">
+                            <i class="fas fa-times"></i> مسح الكل
+                        </button>
+                    </div>
+                    <div class="important-list" id="importantList">
+                        <!-- ستم ملؤها بواسطة JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- نموذج إعدادات الإشعارات -->
+    <div id="notificationSettingsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>إعدادات الإشعارات</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="notificationSettingsForm">
+                    <div class="notification-categories">
+                        <h4>أنواع الإشعارات</h4>
+                        
+                        <div class="category-item">
+                            <div class="category-info">
+                                <h5>اشتراكات جديدة</h5>
+                                <p>عند إضافة عضو جديد</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="notifyNewMembers" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="category-item">
+                            <div class="category-info">
+                                <h5>تجديد اشتراكات</h5>
+                                <p>عند تجديد اشتراك عضو</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="notifyRenewals" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="category-item">
+                            <div class="category-info">
+                                <h5>اشتراكات منتهية</h5>
+                                <p>عند انتهاء اشتراك عضو</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="notifyExpired" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="category-item">
+                            <div class="category-info">
+                                <h5>اشتراكات على وشك الانتهاء</h5>
+                                <p>قبل انتهاء الاشتراك ب 7 أيام</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="notifyExpiring" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="category-item">
+                            <div class="category-info">
+                                <h5>مدفوعات</h5>
+                                <p>عند استلام دفعة</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="notifyPayments" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="notification-methods">
+                        <h4>طرق الإرسال</h4>
+                        
+                        <div class="method-item">
+                            <div class="method-info">
+                                <h5>الإشعارات داخل النظام</h5>
+                                <p>عرض الإشعارات في هذه الصفحة</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="methodInApp" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="method-item">
+                            <div class="method-info">
+                                <h5>البريد الإلكتروني</h5>
+                                <p>إرسال إشعارات عبر البريد</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="methodEmail">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="method-item">
+                            <div class="method-info">
+                                <h5>رسائل SMS</h5>
+                                <p>إرسال إشعارات عبر رسائل نصية</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="methodSMS">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="notificationSound">صوت الإشعارات</label>
+                        <select id="notificationSound">
+                            <option value="default">الصوت الافتراضي</option>
+                            <option value="soft">صوت ناعم</option>
+                            <option value="alert">صوت تنبيه</option>
+                            <option value="none">بدون صوت</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">حفظ الإعدادات</button>
+                        <button type="button" class="btn-secondary close-modal">إلغاء</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- نموذج عرض تفاصيل الإشعار -->
+    <div id="notificationDetailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="notificationDetailsTitle">تفاصيل الإشعار</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="notification-details" id="notificationDetailsContent">
+                    <!-- ستم ملؤها بواسطة JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+    <script>
+    /**
+     * سكريبت خاص بصفحة الإشعارات
+     */
+    
+    // متغيرات الصفحة
+    let notificationsCurrentPage = 1;
+    let notificationsPerPage = 25;
+    let filteredNotifications = [];
+    let selectedNotifications = new Set();
+    
+    // تهيئة صفحة الإشعارات
+    function initNotificationsPage() {
+        console.log("🔔 تهيئة صفحة الإشعارات...");
+        
+        // تحديث الإحصائيات
+        updateNotificationsStats();
+        
+        // تحميل الإشعارات
+        loadNotifications();
+        
+        // تهيئة الأحداث
+        initNotificationsEvents();
+        
+        // تحديث العداد في القائمة الجانبية
+        updateSidebarNotificationCount();
+    }
+    
+    // دالة تحديث إحصائيات الإشعارات
+    function updateNotificationsStats() {
+        const today = new Date().toISOString().split('T')[0];
+        
+        // إجمالي الإشعارات
+        const total = notifications.length;
+        
+        // الإشعارات غير المقروءة
+        const unread = notifications.filter(n => !n.read).length;
+        
+        // الإشعارات المقروءة
+        const read = notifications.filter(n => n.read).length;
+        
+        // إشعارات اليوم
+        const todayNotifications = notifications.filter(n => n.date === today).length;
+        
+        // تحديث العدادات
+        document.getElementById('totalNotifications').textContent = total;
+        document.getElementById('unreadNotifications').textContent = unread;
+        document.getElementById('readNotifications').textContent = read;
+        document.getElementById('todayNotifications').textContent = todayNotifications;
+        
+        // تحديث العداد في الشريط العلوي
+        document.getElementById('notificationCount').textContent = unread;
+    }
+    
+    // دالة تحديث العداد في القائمة الجانبية
+    function updateSidebarNotificationCount() {
+        const unreadCount = notifications.filter(n => !n.read).length;
+        const sidebarCount = document.getElementById('sidebarNotificationCount');
+        if (sidebarCount) {
+            sidebarCount.textContent = unreadCount;
+            sidebarCount.style.display = unreadCount > 0 ? 'inline-flex' : 'none';
+        }
+    }
+   
+    // دالة تطبيق الفلترة
+    function applyNotificationsFilter(type, status, date) {
+        let filtered = [...notifications];
+        
+        // فلترة حسب النوع
+        if (type !== 'all') {
+            filtered = filtered.filter(n => n.type === type);
+        }
+        
+        // فلترة حسب الحالة
+        if (status !== 'all') {
+            switch(status) {
+                case 'unread':
+                    filtered = filtered.filter(n => !n.read);
+                    break;
+                case 'read':
+                    filtered = filtered.filter(n => n.read);
+                    break;
+                case 'important':
+                    filtered = filtered.filter(n => n.important);
+                    break;
+            }
+        }
+        
+        // فلترة حسب التاريخ
+        if (date !== 'all') {
+            const today = new Date();
+            
+            switch(date) {
+                case 'today':
+                    const todayStr = today.toISOString().split('T')[0];
+                    filtered = filtered.filter(n => n.date === todayStr);
+                    break;
+                    
+                case 'week':
+                    const weekAgo = new Date();
+                    weekAgo.setDate(today.getDate() - 7);
+                    const weekAgoStr = weekAgo.toISOString().split('T')[0];
+                    filtered = filtered.filter(n => n.date >= weekAgoStr);
+                    break;
+                    
+                case 'month':
+                    const monthAgo = new Date();
+                    monthAgo.setMonth(today.getMonth() - 1);
+                    const monthAgoStr = monthAgo.toISOString().split('T')[0];
+                    filtered = filtered.filter(n => n.date >= monthAgoStr);
+                    break;
+            }
+        }
+        
+        return filtered;
+    }
+    
+    // دالة ترتيب الإشعارات
+    function sortNotifications(notificationsList, sortType) {
+        const sorted = [...notificationsList];
+        
+        sorted.sort((a, b) => {
+            switch(sortType) {
+                case 'newest':
+                    return new Date(b.timestamp || b.date) - new Date(a.timestamp || a.date);
+                    
+                case 'oldest':
+                    return new Date(a.timestamp || a.date) - new Date(b.timestamp || b.date);
+                    
+                case 'important':
+                    if (a.important && !b.important) return -1;
+                    if (!a.important && b.important) return 1;
+                    return new Date(b.timestamp || b.date) - new Date(a.timestamp || a.date);
+                    
+                default:
+                    return 0;
+            }
+        });
+        
+        return sorted;
+    }
+    
+    // دالة عرض الإشعارات
+    function renderNotifications() {
+        const container = document.getElementById('notificationsContent');
+        if (!container) return;
+        
+        // حساب البداية والنهاية للصفحة الحالية
+        const startIndex = (notificationsCurrentPage - 1) * notificationsPerPage;
+        const endIndex = startIndex + notificationsPerPage;
+        const pageNotifications = filteredNotifications.slice(startIndex, endIndex);
+        
+        if (pageNotifications.length === 0) {
+            container.innerHTML = `
+                <div class="no-notifications">
+                    <div class="no-data">
+                        <i class="fas fa-bell-slash"></i>
+                        <p>لا توجد إشعارات</p>
+                    </div>
+                </div>
+            `;
+            return;
+        }
+        
+        let html = '';
+        
+        pageNotifications.forEach(notification => {
+            const notificationDate = new Date(notification.date);
+            const timeAgo = getTimeAgo(notificationDate);
+            
+            html += `
+                <div class="notification-list-item ${notification.read ? '' : 'unread'} ${notification.important ? 'important' : ''}" 
+                     data-id="${notification.id}">
+                    <div class="notification-list-checkbox">
+                        <input type="checkbox" class="notification-checkbox" 
+                               data-id="${notification.id}" 
+                               ${selectedNotifications.has(notification.id) ? 'checked' : ''}>
+                    </div>
+                    
+                    <div class="notification-list-icon">
+                        <div class="notification-icon ${notification.type}">
+                            ${getNotificationIcon(notification.type)}
+                        </div>
+                    </div>
+                    
+                    <div class="notification-list-content" onclick="viewNotificationDetails(${notification.id})">
+                        <div class="notification-list-header">
+                            <h4>${notification.title}</h4>
+                            <span class="notification-time">${timeAgo}</span>
+                        </div>
+                        <p class="notification-message">${notification.message}</p>
+                        <div class="notification-meta">
+                            <span class="notification-type ${notification.type}">${getNotificationTypeText(notification.type)}</span>
+                            ${notification.important ? '<span class="important-badge"><i class="fas fa-star"></i> مهم</span>' : ''}
+                        </div>
+                    </div>
+                    
+                    <div class="notification-list-actions">
+                        <button class="btn-mark-read ${notification.read ? 'read' : ''}" 
+                                data-id="${notification.id}" 
+                                title="${notification.read ? 'تم القراءة' : 'تحديد كمقروء'}">
+                            <i class="fas fa-${notification.read ? 'envelope-open' : 'envelope'}"></i>
+                        </button>
+                        
+                        <button class="btn-mark-important ${notification.important ? 'important' : ''}" 
+                                data-id="${notification.id}" 
+                                title="${notification.important ? 'إلغاء التمييز' : 'تمييز كمهم'}">
+                            <i class="fas fa-${notification.important ? 'star' : 'star'}"></i>
+                        </button>
+                        
+                        <button class="btn-delete-notification" 
+                                data-id="${notification.id}" 
+                                title="حذف">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+        });
+        
+        container.innerHTML = html;
+        
+        // إضافة الأحداث
+        attachNotificationEvents();
+        
+        // تحديث زر تحديد الكل
+        updateSelectAllCheckbox();
+        
+        // تحديث قائمة الإشعارات المهمة
+        updateImportantNotifications();
+    }
+    
+    // دالة الحصول على أيقونة الإشعار
+    function getNotificationIcon(type) {
+        const icons = {
+            'system': '<i class="fas fa-cog"></i>',
+            'members': '<i class="fas fa-user-plus"></i>',
+            'subscriptions': '<i class="fas fa-credit-card"></i>',
+            'renewals': '<i class="fas fa-redo"></i>',
+            'payments': '<i class="fas fa-money-bill-wave"></i>',
+            'reminders': '<i class="fas fa-bell"></i>'
+        };
+        return icons[type] || '<i class="fas fa-bell"></i>';
+    }
+    
+    // دالة الحصول على نص نوع الإشعار
+    function getNotificationTypeText(type) {
+        const types = {
+            'system': 'نظام',
+            'members': 'أعضاء',
+            'subscriptions': 'اشتراكات',
+            'renewals': 'تجديدات',
+            'payments': 'مدفوعات',
+            'reminders': 'تذكيرات'
+        };
+        return types[type] || 'إشعار';
+    }
+    
+    // دالة حساب الوقت المنقضي
+    function getTimeAgo(date) {
+        const now = new Date();
+        const diffMs = now - date;
+        const diffSec = Math.floor(diffMs / 1000);
+        const diffMin = Math.floor(diffSec / 60);
+        const diffHour = Math.floor(diffMin / 60);
+        const diffDay = Math.floor(diffHour / 24);
+        
+        if (diffDay > 0) {
+            return `قبل ${diffDay} يوم`;
+        } else if (diffHour > 0) {
+            return `قبل ${diffHour} ساعة`;
+        } else if (diffMin > 0) {
+            return `قبل ${diffMin} دقيقة`;
+        } else {
+            return 'الآن';
+        }
+    }
+    
+    // دالة إضافة الأحداث للإشعارات
+    function attachNotificationEvents() {
+        // صناديق التحديد
+        document.querySelectorAll('.notification-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const notificationId = parseInt(this.getAttribute('data-id'));
+                
+                if (this.checked) {
+                    selectedNotifications.add(notificationId);
+                } else {
+                    selectedNotifications.delete(notificationId);
+                }
+                
+                updateSelectAllCheckbox();
+            });
+        });
+        
+        // أزرار تحديد كمقروء
+        document.querySelectorAll('.btn-mark-read').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const notificationId = parseInt(this.getAttribute('data-id'));
+                markNotificationAsRead(notificationId);
+            });
+        });
+        
+        // أزرار التمييز كمهم
+        document.querySelectorAll('.btn-mark-important').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const notificationId = parseInt(this.getAttribute('data-id'));
+                toggleNotificationImportance(notificationId);
+            });
+        });
+        
+        // أزرار الحذف
+        document.querySelectorAll('.btn-delete-notification').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const notificationId = parseInt(this.getAttribute('data-id'));
+                deleteNotification(notificationId);
+            });
+        });
+    }
+    
+    // دالة تهيئة أحداث الصفحة
+    function initNotificationsEvents() {
+        // الفلاتر
+        const filterElements = ['filterType', 'filterStatus', 'filterDate', 'filterSort'];
+        filterElements.forEach(id => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.addEventListener('change', () => {
+                    notificationsCurrentPage = 1;
+                    loadNotifications();
+                });
+            }
+        });
+        
+        // عدد الإشعارات في الصفحة
+        const notificationsPerPageSelect = document.getElementById('notificationsPerPage');
+        if (notificationsPerPageSelect) {
+            notificationsPerPageSelect.addEventListener('change', function() {
+                notificationsPerPage = parseInt(this.value);
+                notificationsCurrentPage = 1;
+                loadNotifications();
+            });
+        }
+        
+        // زر تحديد الكل
+        const selectAllBtn = document.getElementById('selectAllNotificationsBtn');
+        if (selectAllBtn) {
+            selectAllBtn.addEventListener('click', () => {
+                const currentPageNotifications = getCurrentPageNotifications();
+                currentPageNotifications.forEach(notification => {
+                    selectedNotifications.add(notification.id);
+                });
+                renderNotifications();
+            });
+        }
+        
+        // زر إلغاء تحديد الكل
+        const deselectAllBtn = document.getElementById('deselectAllNotificationsBtn');
+        if (deselectAllBtn) {
+            deselectAllBtn.addEventListener('click', () => {
+                selectedNotifications.clear();
+                renderNotifications();
+            });
+        }
+        
+        // زر تحديد الكل كمقروء
+        const markAllReadBtn = document.getElementById('markAllReadBtn');
+        if (markAllReadBtn) {
+            markAllReadBtn.addEventListener('click', markAllAsRead);
+        }
+        
+        // زر حذف الكل
+        const deleteAllBtn = document.getElementById('deleteAllBtn');
+        if (deleteAllBtn) {
+            deleteAllBtn.addEventListener('click', deleteAllNotifications);
+        }
+        
+        // زر تصدير
+        const exportBtn = document.getElementById('exportNotificationsBtn');
+        if (exportBtn) {
+            exportBtn.addEventListener('click', exportNotifications);
+        }
+        
+        // زر إعدادات الإشعارات
+        const settingsBtn = document.getElementById('notificationSettingsBtn');
+        if (settingsBtn) {
+            settingsBtn.addEventListener('click', () => {
+                openModal('notificationSettingsModal');
+            });
+        }
+        
+        // زر مسح الإشعارات المهمة
+        const clearImportantBtn = document.getElementById('clearImportantBtn');
+        if (clearImportantBtn) {
+            clearImportantBtn.addEventListener('click', clearAllImportant);
+        }
+        
+        // نموذج إعدادات الإشعارات
+        const settingsForm = document.getElementById('notificationSettingsForm');
+        if (settingsForm) {
+            settingsForm.addEventListener('submit', saveNotificationSettings);
+            
+            // تحميل الإعدادات
+            loadNotificationSettings();
+        }
+        
+        // الترحيم
+        const prevBtn = document.getElementById('prevNotificationsBtn');
+        const nextBtn = document.getElementById('nextNotificationsBtn');
+        
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                if (notificationsCurrentPage > 1) {
+                    notificationsCurrentPage--;
+                    loadNotifications();
+                }
+            });
+        }
+        
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                const totalPages = Math.ceil(filteredNotifications.length / notificationsPerPage);
+                if (notificationsCurrentPage < totalPages) {
+                    notificationsCurrentPage++;
+                    loadNotifications();
+                }
+            });
+        }
+    }
+    
+    // دالة الحصول على إشعارات الصفحة الحالية
+    function getCurrentPageNotifications() {
+        const startIndex = (notificationsCurrentPage - 1) * notificationsPerPage;
+        const endIndex = startIndex + notificationsPerPage;
+        return filteredNotifications.slice(startIndex, endIndex);
+    }
+    
+    // دالة تحديث تحديد الكل
+    function updateSelectAllCheckbox() {
+        const checkboxes = document.querySelectorAll('.notification-checkbox');
+        const allChecked = checkboxes.length > 0 && 
+            Array.from(checkboxes).every(cb => cb.checked);
+    }
+    
+    // دالة تحديث الترحيم
+    function updateNotificationsPagination() {
+        const totalPages = Math.ceil(filteredNotifications.length / notificationsPerPage);
+        
+        document.querySelector('.current-page').textContent = notificationsCurrentPage;
+        document.querySelector('.total-pages').textContent = totalPages;
+        
+        const prevBtn = document.getElementById('prevNotificationsBtn');
+        const nextBtn = document.getElementById('nextNotificationsBtn');
+        
+        if (prevBtn) prevBtn.disabled = notificationsCurrentPage === 1;
+        if (nextBtn) nextBtn.disabled = notificationsCurrentPage === totalPages || totalPages === 0;
+    }
+    
+    // دالة تحديث الإشعارات المهمة
+    function updateImportantNotifications() {
+        const importantList = document.getElementById('importantList');
+        if (!importantList) return;
+        
+        const importantNotifications = notifications.filter(n => n.important).slice(0, 5);
+        
+        if (importantNotifications.length === 0) {
+            importantList.innerHTML = `
+                <div class="no-important">
+                    <i class="fas fa-star"></i>
+                    <p>لا توجد إشعارات مهمة</p>
+                </div>
+            `;
+            return;
+        }
+        
+        let html = '';
+        
+        importantNotifications.forEach(notification => {
+            const timeAgo = getTimeAgo(new Date(notification.date));
+            
+            html += `
+                <div class="important-item" data-id="${notification.id}">
+                    <div class="important-icon">
+                        ${getNotificationIcon(notification.type)}
+                    </div>
+                    <div class="important-content">
+                        <h5>${notification.title}</h5>
+                        <p>${notification.message.substring(0, 50)}...</p>
+                        <small>${timeAgo}</small>
+                    </div>
+                    <button class="btn-remove-important" data-id="${notification.id}">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+        });
+        
+        importantList.innerHTML = html;
+        
+        // إضافة أحداث لأزرار الإزالة
+        document.querySelectorAll('.btn-remove-important').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const notificationId = parseInt(this.getAttribute('data-id'));
+                toggleNotificationImportance(notificationId);
+            });
+        });
+    }
+    
+    // دالة تحديد إشعار كمقروء
+    function markNotificationAsRead(notificationId) {
+        const notification = notifications.find(n => n.id === notificationId);
+        if (notification) {
+            notification.read = true;
+            saveData();
+            loadNotifications();
+            updateNotificationsStats();
+            updateSidebarNotificationCount();
+            
+            showAlert('تم', 'تم تحديد الإشعار كمقروء', true);
+        }
+    }
+    
+    // دالة تحديد الكل كمقروء
+    function markAllAsRead() {
+        if (filteredNotifications.length === 0) {
+            showAlert('معلومة', 'لا توجد إشعارات', false);
+            return;
+        }
+        
+        filteredNotifications.forEach(notification => {
+            const originalNotification = notifications.find(n => n.id === notification.id);
+            if (originalNotification) {
+                originalNotification.read = true;
+            }
+        });
+        
+        saveData();
+        loadNotifications();
+        updateNotificationsStats();
+        updateSidebarNotificationCount();
+        
+        showAlert('تم', 'تم تحديد جميع الإشعارات كمقروء', true);
+    }
+    
+    // دالة تبديل أهمية الإشعار
+    function toggleNotificationImportance(notificationId) {
+        const notification = notifications.find(n => n.id === notificationId);
+        if (notification) {
+            notification.important = !notification.important;
+            saveData();
+            loadNotifications();
+            updateImportantNotifications();
+            
+            const message = notification.important ? 
+                'تم تمييز الإشعار كمهم' : 
+                'تم إلغاء تمييز الإشعار';
+            showAlert('تم', message, true);
+        }
+    }
+    
+    // دالة حذف إشعار
+    function deleteNotification(notificationId) {
+        if (confirm('هل أنت متأكد من حذف هذا الإشعار؟')) {
+            const index = notifications.findIndex(n => n.id === notificationId);
+            if (index !== -1) {
+                notifications.splice(index, 1);
+                saveData();
+                loadNotifications();
+                updateNotificationsStats();
+                updateSidebarNotificationCount();
+                
+                showAlert('تم', 'تم حذف الإشعار', true);
+            }
+        }
+    }
+    
+    // دالة حذف الكل
+    function deleteAllNotifications() {
+        if (filteredNotifications.length === 0) {
+            showAlert('معلومة', 'لا توجد إشعارات', false);
+            return;
+        }
+        
+        if (confirm(`هل أنت متأكد من حذف جميع الإشعارات (${filteredNotifications.length})؟`)) {
+            // حذف الإشعارات المصفاة فقط
+            filteredNotifications.forEach(filteredNotification => {
+                const index = notifications.findIndex(n => n.id === filteredNotification.id);
+                if (index !== -1) {
+                    notifications.splice(index, 1);
+                }
+            });
+            
+            saveData();
+            loadNotifications();
+            updateNotificationsStats();
+            updateSidebarNotificationCount();
+            
+            showAlert('تم', 'تم حذف جميع الإشعارات', true);
+        }
+    }
+    
+    // دالة مسح جميع الإشعارات المهمة
+    function clearAllImportant() {
+        const importantNotifications = notifications.filter(n => n.important);
+        
+        if (importantNotifications.length === 0) {
+            showAlert('معلومة', 'لا توجد إشعارات مهمة', false);
+            return;
+        }
+        
+        if (confirm(`هل أنت متأكد من إلغاء تمييز جميع الإشعارات المهمة (${importantNotifications.length})؟`)) {
+            importantNotifications.forEach(notification => {
+                notification.important = false;
+            });
+            
+            saveData();
+            loadNotifications();
+            updateImportantNotifications();
+            
+            showAlert('تم', 'تم إلغاء تمييز جميع الإشعارات المهمة', true);
+        }
+    }
+    
+    // دالة عرض تفاصيل الإشعار
+    function viewNotificationDetails(notificationId) {
+        const notification = notifications.find(n => n.id === notificationId);
+        if (!notification) return;
+        
+        // تحديث كققراءة إذا لم يكن مقروءاً
+if (!notification.read) {
+notification.read = true;
+saveData();
+updateNotificationsStats();
+updateSidebarNotificationCount();
+}
+    // تعبئة البيانات في النموذج
+    document.getElementById('notificationDetailsTitle').textContent = notification.title;
+    
+    const notificationDate = new Date(notification.date);
+    const formattedDate = notificationDate.toLocaleDateString('ar-EG', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+    
+    const detailsHtml = `
+        <div class="notification-detail-header">
+            <div class="detail-icon ${notification.type}">
+                ${getNotificationIcon(notification.type)}
+            </div>
+            <div class="detail-info">
+                <h4>${notification.title}</h4>
+                <div class="detail-meta">
+                    <span class="detail-type ${notification.type}">
+                        ${getNotificationTypeText(notification.type)}
+                    </span>
+                    <span class="detail-time">
+                        <i class="fas fa-clock"></i> ${formattedDate}
+                    </span>
+                    ${notification.important ? '<span class="detail-important"><i class="fas fa-star"></i> مهم</span>' : ''}
+                </div>
+            </div>
+        </div>
+        
+        <div class="notification-detail-body">
+            <div class="detail-message">
+                <h5>الرسالة:</h5>
+                <p>${notification.message}</p>
+            </div>
+            
+            ${notification.details ? `
+                <div class="detail-additional">
+                    <h5>تفاصيل إضافية:</h5>
+                    <p>${notification.details}</p>
+                </div>
+            ` : ''}
+            
+            ${notification.user ? `
+                <div class="detail-related-user">
+                    <h5>المستخدم المرتبط:</h5>
+                    <div class="user-info">
+                        <span>${notification.user}</span>
+                        ${notification.memberId ? `<small>كود: ${notification.memberId}</small>` : ''}
+                    </div>
+                </div>
+            ` : ''}
+        </div>
+        
+        <div class="notification-detail-footer">
+            <div class="detail-actions">
+                <button class="btn-secondary" onclick="toggleNotificationImportance(${notification.id}); closeModal('notificationDetailsModal');">
+                    <i class="fas fa-${notification.important ? 'star' : 'star'}"></i>
+                    ${notification.important ? 'إلغاء التمييز' : 'تمييز كمهم'}
+                </button>
+                <button class="btn-danger" onclick="deleteNotification(${notification.id}); closeModal('notificationDetailsModal');">
+                    <i class="fas fa-trash"></i> حذف
+                </button>
+            </div>
+        </div>
+    `;
+    
+    document.getElementById('notificationDetailsContent').innerHTML = detailsHtml;
+    
+    // فتح النموذج
+    openModal('notificationDetailsModal');
+}
+
+// دالة تحميل إعدادات الإشعارات
+function loadNotificationSettings() {
+    const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {};
+    
+    // تعيين القيم الافتراضية
+    document.getElementById('notifyNewMembers').checked = settings.notifyNewMembers !== false;
+    document.getElementById('notifyRenewals').checked = settings.notifyRenewals !== false;
+    document.getElementById('notifyExpired').checked = settings.notifyExpired !== false;
+    document.getElementById('notifyExpiring').checked = settings.notifyExpiring !== false;
+    document.getElementById('notifyPayments').checked = settings.notifyPayments !== false;
+    document.getElementById('methodInApp').checked = settings.methodInApp !== false;
+    document.getElementById('methodEmail').checked = settings.methodEmail || false;
+    document.getElementById('methodSMS').checked = settings.methodSMS || false;
+    document.getElementById('notificationSound').value = settings.notificationSound || 'default';
+}
+
+// دالة حفظ إعدادات الإشعارات
+function saveNotificationSettings(e) {
+    e.preventDefault();
+    
+    const settings = {
+        notifyNewMembers: document.getElementById('notifyNewMembers').checked,
+        notifyRenewals: document.getElementById('notifyRenewals').checked,
+        notifyExpired: document.getElementById('notifyExpired').checked,
+        notifyExpiring: document.getElementById('notifyExpiring').checked,
+        notifyPayments: document.getElementById('notifyPayments').checked,
+        methodInApp: document.getElementById('methodInApp').checked,
+        methodEmail: document.getElementById('methodEmail').checked,
+        methodSMS: document.getElementById('methodSMS').checked,
+        notificationSound: document.getElementById('notificationSound').value
+    };
+    
+    localStorage.setItem('notificationSettings', JSON.stringify(settings));
+    
+    closeModal('notificationSettingsModal');
+    showAlert('تم الحفظ', 'تم حفظ إعدادات الإشعارات بنجاح', true);
+}
+
+// دالة تصدير الإشعارات
+function exportNotifications() {
+    const exportData = filteredNotifications.map(notification => ({
+        'العنوان': notification.title,
+        'الرسالة': notification.message,
+        'النوع': getNotificationTypeText(notification.type),
+        'التاريخ': notification.date,
+        'الحالة': notification.read ? 'مقروء' : 'غير مقروء',
+        'الأهمية': notification.important ? 'مهم' : 'عادي'
+    }));
+    
+    const dataStr = JSON.stringify(exportData, null, 2);
+    const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+    
+    const exportFileName = `الإشعارات_${new Date().toISOString().split('T')[0]}.json`;
+    
+    const linkElement = document.createElement('a');
+    linkElement.setAttribute('href', dataUri);
+    linkElement.setAttribute('download', exportFileName);
+    document.body.appendChild(linkElement);
+    linkElement.click();
+    document.body.removeChild(linkElement);
+    
+    showAlert('تم التصدير', 'تم تصدير الإشعارات بنجاح', true);
+}
+
+</script>
+
+</body> 
+</html>

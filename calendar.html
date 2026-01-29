@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التقويم والاشتراكات - نظام إدارة الجيم</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- القائمة الجانبية -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <h1>GYM <span>MANAGER</span></h1>
+                </div>
+                <button class="sidebar-close" id="sidebarClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="sidebar-profile">
+                <div class="profile-img">
+                    <img src="https://ui-avatars.com/api/?name=Admin&background=0f4c75&color=fff" alt="صورة المستخدم">
+                </div>
+                <div class="profile-info">
+                    <h3 id="userName">المسؤول الرئيسي</h3>
+                    <p id="userRole">مسؤول</p>
+                    <span class="status online" id="userStatus">متصل</span>
+                </div>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <ul>
+                    <li>
+                        <a href="dashboard.html">
+                            <i class="fas fa-home"></i>
+                            <span>لوحة التحكم</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="members.html">
+                            <i class="fas fa-users"></i>
+                            <span>إدارة الأعضاء</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="renew.html">
+                            <i class="fas fa-redo"></i>
+                            <span>تجديد الاشتراكات</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="calendar.html">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>التقويم والاشتراكات</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="subscriptions.html">
+                            <i class="fas fa-credit-card"></i>
+                            <span>الاشتراكات</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="settings.html">
+                            <i class="fas fa-cog"></i>
+                            <span>الإعدادات</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button class="btn-logout" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>تسجيل الخروج</span>
+                </button>
+            </div>
+        </aside>
+        
+        <!-- طبقة التعتيم للقائمة الجانبية -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        
+        <!-- المحتوى الرئيسي -->
+        <main class="main-content">
+            <!-- شريط الرأس العلوي -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="sidebar-toggle" id="sidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="page-title">
+                        <h2>التقويم والاشتراكات</h2>
+                    </div>
+                </div>
+                
+                <div class="header-right">
+                    <button class="notifications-btn" id="notificationsBtn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-count" id="notificationCount">0</span>
+                    </button>
+                    
+               
+                </div>
+            </header>
+            
+            <!-- محتوى صفحة التقويم -->
+            <div class="dashboard-content">
+                <!-- عناصر تحكم التقويم -->
+                <div class="calendar-controls">
+                    <div class="calendar-nav">
+                        <button class="nav-btn" id="prevMonth">
+                            <i class="fas fa-chevron-right"></i> الشهر السابق
+                        </button>
+                        <h3 id="currentMonthYear">سبتمبر 2024</h3>
+                        <button class="nav-btn" id="nextMonth">
+                            الشهر التالي <i class="fas fa-chevron-left"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="calendar-actions">
+                        <button class="btn-primary" id="todayBtn">
+                            <i class="fas fa-calendar-day"></i> اليوم
+                        </button>
+                        
+                    </div>
+                </div>
+                
+                <!-- التقويم -->
+                <div class="calendar-container">
+                    <!-- رأس التقويم -->
+                    <div class="calendar-header">
+                        <div class="day-header">الأحد</div>
+                        <div class="day-header">الاثنين</div>
+                        <div class="day-header">الثلاثاء</div>
+                        <div class="day-header">الأربعاء</div>
+                        <div class="day-header">الخميس</div>
+                        <div class="day-header">الجمعة</div>
+                        <div class="day-header">السبت</div>
+                    </div>
+                    
+                    <!-- أيام التقويم -->
+                    <div class="calendar-days" id="calendarDays">
+                        <!-- سيتم ملؤه بواسطة JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- الأحداث اليومية -->
+                <div class="daily-events">
+                    <div class="section-header">
+                        <h3 id="selectedDateTitle">الأحداث اليومية</h3>
+                        <div class="event-stats">
+                            <span class="stat-item">
+                                <i class="fas fa-user-plus"></i>
+                                <span id="newSubscriptionsCount">0</span> اشتراك جديد
+                            </span>
+                            <span class="stat-item">
+                                <i class="fas fa-redo"></i>
+                                <span id="renewalsCount">0</span> تجديد
+                            </span>
+                            <span class="stat-item">
+                                <i class="fas fa-user-times"></i>
+                                <span id="expirationsCount">0</span> انتهاء
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="events-list" id="dailyEventsList">
+                        <!-- سيتم ملؤه بواسطة JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- نموذج تفاصيل اليوم -->
+    <div id="dayDetailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="dayDetailsTitle">تفاصيل اليوم</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="day-events-details" id="dayEventsContent">
+                    <!-- سيتم ملؤه بواسطة JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+    <script>
+    /**
+     * سكريبت خاص بصفحة التقويم والاشتراكات
+     */
+    
+    // متغيرات التقويم
+    let currentDate = new Date();
+    let currentMonth = currentDate.getMonth();
+    let currentYear = currentDate.getFullYear();
+    let selectedDate = null;
+    
+    // تهيئة صفحة التقويم
+    function initCalendarPage() {
+        // إنشاء التقويم
+        generateCalendar();
+        
+        // تحديث الأحداث اليومية
+        updateDailyEvents(currentDate);
+        
+        // تهيئة الأحداث
+        initCalendarEvents();
+    }
+    
+    // دالة إنشاء التقويم
+    function generateCalendar() {
+        const calendarDays = document.getElementById('calendarDays');
+        if (!calendarDays) return;
+        
+        // مسح التقويم الحالي
+        calendarDays.innerHTML = '';
+        
+        // تحديث عنوان الشهر والسنة
+        updateCalendarHeader();
+        
+        // الحصول على أول وآخر يوم من الشهر
+        const firstDay = new Date(currentYear, currentMonth, 1);
+        const lastDay = new Date(currentYear, currentMonth + 1, 0);
+        const daysInMonth = lastDay.getDate();
+        
+        // حساب يوم الأسبوع لأول يوم (مع التعديل للنظام العربي)
+        let firstDayIndex = firstDay.getDay();
+        firstDayIndex = firstDayIndex === 0 ? 6 : firstDayIndex - 1;
+        
+        // الحصول على عدد أيام الشهر السابق
+        const prevMonthLastDay = new Date(currentYear, currentMonth, 0).getDate();
+        
+        // اليوم الحالي
+        const today = new Date();
+        const isToday = (day, month, year) => {
+            return day === today.getDate() &&
+                   month === today.getMonth() &&
+                   year === today.getFullYear();
+        };
+        
+        // إضافة أيام الشهر السابق
+        for (let i = firstDayIndex; i > 0; i--) {
+            const day = document.createElement('div');
+            day.className = 'calendar-day other-month';
+            day.innerHTML = `<div class="day-number">${prevMonthLastDay - i + 1}</div>`;
+            calendarDays.appendChild(day);
+        }
+        
+        // إضافة أيام الشهر الحالي
+        for (let i = 1; i <= daysInMonth; i++) {
+            const day = document.createElement('div');
+            day.className = 'calendar-day';
+            
+            // التحقق إذا كان اليوم هو اليوم الحالي
+            if (isToday(i, currentMonth, currentYear)) {
+                day.classList.add('today');
+            }
+            
+            day.innerHTML = `
+                <div class="day-number">${i}</div>
+                <div class="day-events" id="day-events-${i}"></div>
+            `;
+            
+            // إضافة حدث النقر لاختيار اليوم
+            day.addEventListener('click', () => {
+                selectDay(day, i);
+            });
+            
+            calendarDays.appendChild(day);
+            
+            // تحديث أحداث اليوم
+            updateDayEvents(i);
+        }
+        
+        // إضافة أيام الشهر التالي
+        const totalCells = 42; // 6 أسطر × 7 أيام
+        const remainingCells = totalCells - (firstDayIndex + daysInMonth);
+        
+        for (let i = 1; i <= remainingCells; i++) {
+            const day = document.createElement('div');
+            day.className = 'calendar-day other-month';
+            day.innerHTML = `<div class="day-number">${i}</div>`;
+            calendarDays.appendChild(day);
+        }
+    }
+    
+    // دالة تحديث عنوان التقويم
+    function updateCalendarHeader() {
+        const monthNames = [
+            'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
+            'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'
+        ];
+        
+        const monthYearText = `${monthNames[currentMonth]} ${currentYear}`;
+        document.getElementById('currentMonthYear').textContent = monthYearText;
+    }
+    
+    // دالة تحديث أحداث يوم معين
+    function updateDayEvents(day) {
+        const dayEvents = document.getElementById(`day-events-${day}`);
+        if (!dayEvents) return;
+        
+        // مسح الأحداث الحالية
+        dayEvents.innerHTML = '';
+        
+        // تاريخ اليوم
+        const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        
+        // البحث عن الأحداث في هذا اليوم
+        const dayEventsData = getEventsForDate(dateStr);
+        
+        // إضافة الأحداث إلى الخلية
+        if (dayEventsData.newSubscriptions > 0) {
+            const event = document.createElement('div');
+            event.className = 'day-event new-subscription';
+            event.title = `${dayEventsData.newSubscriptions} اشتراك جديد`;
+            event.textContent = `+${dayEventsData.newSubscriptions}`;
+            dayEvents.appendChild(event);
+        }
+        
+        if (dayEventsData.expirations > 0) {
+            const event = document.createElement('div');
+            event.className = 'day-event expiration';
+            event.title = `${dayEventsData.expirations} اشتراك منتهي`;
+            event.textContent = `${dayEventsData.expirations}`;
+            dayEvents.appendChild(event);
+        }
+        
+        if (dayEventsData.renewals > 0) {
+            const event = document.createElement('div');
+            event.className = 'day-event renewal';
+            event.title = `${dayEventsData.renewals} تجديد اشتراك`;
+            event.textContent = `${dayEventsData.renewals}`;
+            dayEvents.appendChild(event);
+        }
+    }
+    
+    // دالة الحصول على الأحداث ليوم معين
+    function getEventsForDate(dateStr) {
+        const result = {
+            newSubscriptions: 0,
+            expirations: 0,
+            renewals: 0,
+            otherEvents: []
+        };
+        
+        // البحث عن اشتراكات تبدأ في هذا اليوم
+        result.newSubscriptions = subscriptions.filter(sub => 
+            sub.startDate === dateStr
+        ).length;
+        
+        // البحث عن اشتراكات تنتهي في هذا اليوم
+        result.expirations = subscriptions.filter(sub => 
+            sub.endDate === dateStr && sub.status === 'active'
+        ).length;
+        
+        // البحث عن تجديدات في هذا اليوم
+        result.renewals = activities.filter(activity => 
+            activity.date === dateStr && activity.type === 'تجديد اشتراك'
+        ).length;
+        
+        return result;
+    }
+    
+    // دالة اختيار يوم
+    function selectDay(dayElement, dayNumber) {
+        // إزالة التحديد من اليوم السابق
+        const prevSelected = document.querySelector('.calendar-day.selected');
+        if (prevSelected) {
+            prevSelected.classList.remove('selected');
+        }
+        
+        // تحديد اليوم الجديد
+        dayElement.classList.add('selected');
+        
+        // تحديث التاريخ المحدد
+        selectedDate = new Date(currentYear, currentMonth, dayNumber);
+        
+        // تحديث الأحداث اليومية
+        updateDailyEvents(selectedDate);
+    }
+    
+    // دالة تحديث الأحداث اليومية
+    function updateDailyEvents(date) {
+        const eventsList = document.getElementById('dailyEventsList');
+        const selectedDateTitle = document.getElementById('selectedDateTitle');
+        
+        if (!eventsList || !selectedDateTitle) return;
+        
+        // تنسيق التاريخ
+        const dateStr = date.toISOString().split('T')[0];
+        const formattedDate = date.toLocaleDateString('ar-EG', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+        
+        // تحديث عنوان اليوم
+        selectedDateTitle.textContent = `أحداث ${formattedDate}`;
+        
+        // الحصول على الأحداث
+        const events = getEventsForDate(dateStr);
+        
+        // تحديث العدادات
+        document.getElementById('newSubscriptionsCount').textContent = events.newSubscriptions;
+        document.getElementById('renewalsCount').textContent = events.renewals;
+        document.getElementById('expirationsCount').textContent = events.expirations;
+        
+        // مسح قائمة الأحداث
+        eventsList.innerHTML = '';
+        
+        // إذا لم يكن هناك أحداث
+        if (events.newSubscriptions === 0 && events.renewals === 0 && events.expirations === 0) {
+            eventsList.innerHTML = `
+                <div class="no-events">
+                    <i class="fas fa-calendar-times"></i>
+                    <p>لا توجد أحداث في هذا اليوم</p>
+                </div>
+            `;
+            return;
+        }
+        
+        // إضافة اشتراكات جديدة
+        if (events.newSubscriptions > 0) {
+            const newSubscriptions = subscriptions.filter(sub => sub.startDate === dateStr);
+            
+            newSubscriptions.forEach(subscription => {
+                const eventItem = document.createElement('div');
+                eventItem.className = 'event-item';
+                eventItem.innerHTML = `
+                    <div class="event-icon new-subscription">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <div class="event-content">
+                        <h4>اشتراك جديد</h4>
+                        <p>تم إضافة ${subscription.name} كعضو جديد</p>
+                        <span class="event-time">${subscription.package} - ${subscription.price} ج.م</span>
+                    </div>
+                    <div class="event-member">
+                        <strong>${subscription.name}</strong>
+                        <small>كود: ${subscription.id}</small>
+                    </div>
+                `;
+                
+                eventItem.addEventListener('click', () => {
+                    showMemberInCalendar(subscription.id);
+                });
+                
+                eventsList.appendChild(eventItem);
+            });
+        }
+        
+        // إضافة تجديدات
+        if (events.renewals > 0) {
+            const renewals = activities.filter(activity => 
+                activity.date === dateStr && activity.type === 'تجديد اشتراك'
+            );
+            
+            renewals.forEach(activity => {
+                const eventItem = document.createElement('div');
+                eventItem.className = 'event-item';
+                eventItem.innerHTML = `
+                    <div class="event-icon renewal">
+                        <i class="fas fa-redo"></i>
+                    </div>
+                    <div class="event-content">
+                        <h4>تجديد اشتراك</h4>
+                        <p>${activity.details}</p>
+                        <span class="event-time">${activity.time}</span>
+                    </div>
+                    <div class="event-member">
+                        <strong>${activity.user}</strong>
+                        <small>${activity.amount} ج.م</small>
+                    </div>
+                `;
+                
+                eventsList.appendChild(eventItem);
+            });
+        }
+        
+        // إضافة انتهاء اشتراكات
+        if (events.expirations > 0) {
+            const expirations = subscriptions.filter(sub => 
+                sub.endDate === dateStr && sub.status === 'active'
+            );
+            
+            expirations.forEach(subscription => {
+                const eventItem = document.createElement('div');
+                eventItem.className = 'event-item';
+                eventItem.innerHTML = `
+                    <div class="event-icon expiration">
+                        <i class="fas fa-user-times"></i>
+                    </div>
+                    <div class="event-content">
+                        <h4>انتهاء اشتراك</h4>
+                        <p>اشتراك ${subscription.name} ينتهي اليوم</p>
+                        <span class="event-time">${subscription.package}</span>
+                    </div>
+                    <div class="event-member">
+                        <strong>${subscription.name}</strong>
+                        <small>كود: ${subscription.id}</small>
+                    </div>
+                `;
+                
+                eventItem.addEventListener('click', () => {
+                    showMemberInCalendar(subscription.id);
+                });
+                
+                eventsList.appendChild(eventItem);
+            });
+        }
+    }
+    
+    // دالة تهيئة أحداث التقويم
+    function initCalendarEvents() {
+        // زر الشهر السابق
+        const prevMonthBtn = document.getElementById('prevMonth');
+        if (prevMonthBtn) {
+            prevMonthBtn.addEventListener('click', () => {
+                currentMonth--;
+                if (currentMonth < 0) {
+                    currentMonth = 11;
+                    currentYear--;
+                }
+                generateCalendar();
+            });
+        }
+        
+        // زر الشهر التالي
+        const nextMonthBtn = document.getElementById('nextMonth');
+        if (nextMonthBtn) {
+            nextMonthBtn.addEventListener('click', () => {
+                currentMonth++;
+                if (currentMonth > 11) {
+                    currentMonth = 0;
+                    currentYear++;
+                }
+                generateCalendar();
+            });
+        }
+        
+        // زر اليوم
+        const todayBtn = document.getElementById('todayBtn');
+        if (todayBtn) {
+            todayBtn.addEventListener('click', () => {
+                currentDate = new Date();
+                currentMonth = currentDate.getMonth();
+                currentYear = currentDate.getFullYear();
+                generateCalendar();
+                updateDailyEvents(currentDate);
+            });
+        }
+        
+        // أزرار تغيير العرض
+        const viewButtons = document.querySelectorAll('.view-btn');
+        viewButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                viewButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                // هنا يمكن تغيير طريقة عرض التقويم
+                const viewType = this.getAttribute('data-view');
+                changeCalendarView(viewType);
+            });
+        });
+        
+        // زر إضافة حدث
+        const addEventBtn = document.getElementById('addEventBtn');
+        if (addEventBtn) {
+            addEventBtn.addEventListener('click', () => {
+                openAddEventModal();
+            });
+        }
+        
+        // نموذج إضافة حدث
+        const addEventForm = document.getElementById('addEventForm');
+        if (addEventForm) {
+            addEventForm.addEventListener('submit', handleAddEvent);
+        }
+    }
+    
+    // دالة تغيير طريقة عرض التقويم
+    function changeCalendarView(viewType) {
+        // في الإصدار الحالي، نعرض رسالة
+        // يمكن تطبيق طرق عرض مختلفة في المستقبل
+        let message = '';
+        
+        switch(viewType) {
+            case 'week':
+                message = 'سيتم عرض التقويم أسبوعياً';
+                break;
+            case 'day':
+                message = 'سيتم عرض التقويم يومياً';
+                break;
+            default:
+                message = 'سيتم عرض التقويم شهرياً';
+        }
+        
+        showAlert('تغيير العرض', message, false);
+    }
+    
+    // دالة فتح نموذج إضافة حدث
+    function openAddEventModal() {
+        // تعبئة قائمة الأعضاء
+        fillMembersList();
+        
+        // تعيين تاريخ اليوم كافتراضي
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('eventDate').value = today;
+        
+        // تعيين الوقت الحالي
+        const now = new Date();
+        const timeString = now.getHours().toString().padStart(2, '0') + ':' +
+                          now.getMinutes().toString().padStart(2, '0');
+        document.getElementById('eventTime').value = timeString;
+        
+        // فتح النموذج
+        openModal('addEventModal');
+    }
+    
+    // دالة تعبئة قائمة الأعضاء
+    function fillMembersList() {
+        const memberSelect = document.getElementById('eventMember');
+        if (!memberSelect) return;
+        
+        // مسح الخيارات الحالية
+        while (memberSelect.options.length > 1) {
+            memberSelect.remove(1);
+        }
+        
+        // إضافة الأعضاء
+        subscriptions.forEach(member => {
+            const option = document.createElement('option');
+            option.value = member.id;
+            option.textContent = `${member.name} (${member.id})`;
+            memberSelect.appendChild(option);
+        });
+    }
+    
+    // دالة معالجة إضافة حدث
+    async function handleAddEvent(e) {
+        e.preventDefault();
+        
+        const eventData = {
+            title: document.getElementById('eventTitle').value.trim(),
+            date: document.getElementById('eventDate').value,
+            time: document.getElementById('eventTime').value,
+            type: document.getElementById('eventType').value,
+            memberId: document.getElementById('eventMember').value,
+            description: document.getElementById('eventDescription').value.trim()
+        };
+        
+        // التحقق من البيانات
+        if (!validateEventData(eventData)) return;
+        
+        // إضافة النشاط
+        const member = eventData.memberId ? 
+            subscriptions.find(m => m.id === eventData.memberId) : null;
+        
+        const newActivity = {
+            id: activities.length + 1,
+            type: eventData.type,
+            user: member ? member.name : 'النظام',
+            amount: 0,
+            date: eventData.date,
+            time: eventData.time,
+            details: eventData.description || eventData.title
+        };
+        
+        activities.unshift(newActivity);
+        
+        // حفظ البيانات
+        saveData();
+        
+        // إغلاق النموذج
+        closeModal('addEventModal');
+        
+        // تحديث التقويم
+        generateCalendar();
+        
+        // عرض رسالة النجاح
+        showAlert('تمت الإضافة', 'تم إضافة الحدث بنجاح', true);
+    }
+    
+    // دالة التحقق من بيانات الحدث
+    function validateEventData(data) {
+        if (!data.title || data.title.length < 2) {
+            showAlert('خطأ', 'يرجى إدخال عنوان صحيح للحدث', false);
+            return false;
+        }
+        
+        if (!data.date) {
+            showAlert('خطأ', 'يرجى تحديد تاريخ الحدث', false);
+            return false;
+        }
+        
+        if (!data.time) {
+            showAlert('خطأ', 'يرجى تحديد وقت الحدث', false);
+            return false;
+        }
+        
+        if (!data.type) {
+            showAlert('خطأ', 'يرجى اختيار نوع الحدث', false);
+            return false;
+        }
+        
+        return true;
+    }
+    
+    // دالة عرض العضو في التقويم
+    function showMemberInCalendar(memberId) {
+        // يمكن فتح صفحة الأعضاء أو عرض تفاصيل
+        showAlert('عرض العضو', 
+            `سيتم عرض تفاصيل العضو ${memberId} في صفحة إدارة الأعضاء`, 
+            false
+        );
+        
+        // يمكن توجيه المستخدم إلى صفحة الأعضاء
+        // window.location.href = `members.html#member-${memberId}`;
+    }
+    
+    // تشغيل تهيئة الصفحة عند التحميل
+    document.addEventListener('DOMContentLoaded', () => {
+        initCalendarPage();
+    });
+    </script>
+</body>
+</html>
